@@ -11,12 +11,6 @@ cloudinary.config({
     secure: true,
 });
 
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};
-
 export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const file = formData.get('inputFile') as File;
@@ -42,7 +36,6 @@ export async function POST(req: NextRequest) {
           });
         const { public_id } = response;
         const jwt = cookies().get('jwt')?.value;
-        console.log(jwt);
         const userResponse = await fetcher(
             `${process.env.NEXT_PUBLIC_STRAPI_URL}/users/${user_id}`,
             {
@@ -56,7 +49,6 @@ export async function POST(req: NextRequest) {
                 }),
             }
         );
-        console.log(userResponse);
         return NextResponse.json({ message: 'success'});
     } catch (error) {
         console.error(JSON.stringify(error));

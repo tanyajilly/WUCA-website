@@ -33,7 +33,6 @@ export default function Profile({ userData }: { userData: User }) {
                 body: formData,
             });
             if (responseData.message === "success") {
-                console.log('success');
                 router.refresh();
             }
         } catch (error) {
