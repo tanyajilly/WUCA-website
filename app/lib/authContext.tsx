@@ -20,7 +20,7 @@ const User = createContext<ContextProps>({
   setUser: () => {}
 })
 
-export const UserProvider = ({ children }) => {
+export const UserProvider = ({ children }: {children: React.ReactNode}) => {
   const [userData, setUser] = useState<UserDataType>({
     user: null,
     loading: true,
