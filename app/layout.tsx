@@ -4,6 +4,7 @@ import './globals.css'
 import Nav from '@/app/ui/nav';
 import { UserProvider } from '@/app/lib/authContext';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,7 +25,9 @@ export default function RootLayout({
             <UserProvider>
                 <header className="w-full bg-white text-black mb-2">
                   <div className="container mx-auto flex p-4 items-center">
-                      <Link className="mr-auto" href="/"><img className="max-w-20" src="/logo.jpg" alt="WUCA" /></Link>
+                      <Link className="mr-auto" href="/">
+                        <Image className="max-w-20" src="/logo.jpg" alt="WUCA" width="200" height="100" />
+                      </Link>
                       <Nav/>
                   </div>
                 </header>

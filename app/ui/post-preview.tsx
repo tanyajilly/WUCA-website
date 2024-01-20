@@ -12,7 +12,7 @@ export default function PostPreview({ article }: {article: Article}) {
             <div className="w-1/5 shrink-0 aspect-square rounded-md overflow-hidden">
                 <Link href={`/blog/${slug}`}>
                     {url && <Image
-                        src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${url}`}
+                        src={url}
                         alt={heading}
                         width={width}
                         height={height}

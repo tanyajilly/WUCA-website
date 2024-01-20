@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image'
 import { Article } from '@/app/lib/definitions';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
@@ -21,7 +20,7 @@ export default function Post ({ article }: { article: Article }) {
         <article className="">
             <div className="w-full rounded-md overflow-hidden">
                 {url && <Image
-                    src={`${process.env.NEXT_PUBLIC_STRAPI_IMAGE_URL}${url}`}
+                    src={url}
                     alt={heading}
                     width={width}
                     height={height}
