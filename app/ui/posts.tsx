@@ -17,13 +17,20 @@ export default function Posts(
     }) {
 
     const [pageIndex, setPageIndex] = useState(1);
-    const { data } = useSWR(
-        `${process.env.NEXT_PUBLIC_STRAPI_URL}/articles?populate=image&pagination[page]=${pageIndex}&pagination[pageSize]=${pageSize}`,
-        fetcher,
-        {
-            fallbackData: articles
-        }
-    );
+    const url = new URL(`${process.env.NEXT_PUBLIC_STRAPI_URL}/articles`);
+    const params = new URLSearchParams();
+    params.append('populate', 'image');
+    params.append('pagination[page]', pageIndex.toString());
+    params.append('pagination[pageSize]', pageSize.toString());
+    url.search = params.toString();
+
+    const { data, error } = useSWR(url.toString(), fetcher, {
+        fallbackData: articles
+    });
+    if (error) {
+        return <p>Failed to fetch</p>;
+    }
+
     return (
         <>
             <section className="flex flex-col gap-10">

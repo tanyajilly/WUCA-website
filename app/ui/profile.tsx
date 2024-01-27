@@ -11,6 +11,7 @@ export default function Profile({ userData }: { userData: User }) {
     const { username } = userData;
     const avatar = userData.avatar ?? 'default_avatar';
     const [image, setImage] = useState<File | null>(null);
+    const altText = avatar === 'default_avatar' ? 'Profile' : username;
 
     const uploadToClient = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
@@ -51,8 +52,8 @@ export default function Profile({ userData }: { userData: User }) {
             </h1>
             {avatar === 'default_avatar' && (
                 <div>
-                    <h4>Select an image to upload</h4>
-                    <input type="file" onChange={uploadToClient} />
+                    <label className="block" htmlFor="avatar">Select an image to upload</label>
+                    <input id="avatar" type="file" onChange={uploadToClient} />
                     <button
                         className="md:p-2 rounded py-2 text-white bg-blue-600 hover:bg-blue-800 p-2"
                         type="submit"
@@ -67,7 +68,7 @@ export default function Profile({ userData }: { userData: User }) {
             {avatar && (
                 <img
                     src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto,w_150,h_150,g_face,c_thumb,r_max/${avatar}`}
-                    alt="Profile"
+                    alt={altText}
                 />
             )}
         </>

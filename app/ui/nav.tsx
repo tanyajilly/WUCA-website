@@ -12,29 +12,43 @@ export default function Nav() {
     identifier: '',
     password: '',
   });
+  const [error, setError] = useState('');
   const { userData, setUser } = useUser();
   const { user, loading } = userData;
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const responseData = await fetcher(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/local`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          identifier: data.identifier,
-          password: data.password,
-        }),
-      }
-    );
-    if (setToken(responseData)) {
-        setUser({user: responseData.user.username, loading: false});
-        router.refresh();
-    }
+    let responseData;
+    try {
+        responseData = await fetcher(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/local`,
+        {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+            identifier: data.identifier,
+            password: data.password,
+            }),
+        }
+        );
+        if (responseData.error) {
+            const errorMessage = responseData.error.message || 'An error occurred';
+            throw new Error(errorMessage);
+        }
+        if (setToken(responseData)) {
+            setUser({user: responseData.user.username, loading: false});
+            router.refresh();
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            setError(error.message);
+        } else {
+            setError('An unexpected error occurred');
+        }
+    } 
   };
 
   const logout = () => {
@@ -117,6 +131,7 @@ export default function Nav() {
                         Login
                     </button>
                 </form>
+                {error && <small>{error}</small>}
             </li>
             <li>
                 <Link className="md:p-2 block py-2 hover:text-purple-400 text-black" href="/register">

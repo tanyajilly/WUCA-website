@@ -77,7 +77,6 @@ export async function createUser(
         password: userData.password,
         username: userData.username,
     });
-    console.log(validatedFields);
     if (!validatedFields.success) {
         return {
             errors: validatedFields.error.flatten().fieldErrors,
@@ -102,8 +101,6 @@ export async function createUser(
                 }),
             }
         );
-        console.log("responseData");
-        console.log(responseData);
         if (responseData.data === null && responseData.error) {
             throw new Error(`Error: ${responseData.error.message}`);
         }

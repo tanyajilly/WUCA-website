@@ -1,5 +1,4 @@
 import Posts from '@/app/ui/posts';
-import { Button } from '@/app/ui/button';
 import Link from 'next/link';
 import { getArticles } from '@/app/lib/data';
 import { ArticlesResponse } from '@/app/lib/definitions';

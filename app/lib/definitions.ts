@@ -9,12 +9,12 @@ export interface Article {
         updatedAt: string;
         publishedAt: string;
         slug: string;
-        image: {
+        image?: {
             [key: string]: any;
         };
-        author:      Author;
-        categories:  Categories;
-        comments:    Comments;
+        author?:      Author;
+        categories?:  Categories;
+        comments?:    Comments;
     };
 }
 
@@ -24,7 +24,7 @@ export interface Author {
         attributes: {
             name: string;
         }
-    }
+    } | null;
 }
 
 export interface Categories {
@@ -49,10 +49,8 @@ export interface Comments {
 export interface CommentAttributes {
     text:       string;
     author:     string;
-    updatedAt:  Date;
+    updatedAt:  string;
 }
-
-
 
 export interface Pagination {
     page: number;
@@ -62,15 +60,17 @@ export interface Pagination {
 }
 
 export interface ArticlesResponse {
-    data: Article[];
-    meta: {
+    data?: Article[];
+    meta?: {
         pagination: Pagination;
     };
+    error?: Error;
 }
 
 export interface SingleArticleResponse {
-    data: Article;
-    meta: any;
+    data?: Article;
+    meta: {};
+    error?: Error;
 }
 
 export interface UserResponse {
@@ -86,12 +86,12 @@ export interface UserData {
 
 export interface User extends UserData {
     id:        number;
-    provider:  string;
-    confirmed: boolean;
-    blocked:   boolean;
-    createdAt: Date;
-    updatedAt: Date;
-    avatar:    string;
+    provider?:  string;
+    confirmed?: boolean;
+    blocked?:   boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
+    avatar?:    string;
 }
 export interface ArticleData {
     id: number;

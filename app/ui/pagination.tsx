@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 type PaginationProps = {
     pageIndex: number,
@@ -12,6 +12,17 @@ export default function Pagination({
         pageCount,
         setPageIndex
     }: PaginationProps) {
+
+    const handlePreviousClick = useCallback(() => {
+        setPageIndex(pageIndex - 1);
+    }, [pageIndex, setPageIndex]);
+
+    const handleNextClick = useCallback(() => {
+        setPageIndex(pageIndex + 1);
+    }, [pageIndex, setPageIndex]);
+
+    if (pageCount === 1) return null;
+
     return (
         <div className="space-x-2 space-y-2">
             <button className={clsx(
@@ -19,7 +30,7 @@ export default function Pagination({
                 pageIndex === 1 && 'bg-gray-300'
             )}
                 disabled={pageIndex === 1}
-                onClick = {() => setPageIndex(pageIndex - 1)}
+                onClick={handlePreviousClick}
             >
                 Previous
             </button>
@@ -28,7 +39,7 @@ export default function Pagination({
                 pageIndex === pageCount && 'bg-gray-300'
             )}
                 disabled={pageIndex === pageCount}
-                onClick = {() => setPageIndex(pageIndex + 1)}
+                onClick={handleNextClick}
             >
                 Next
             </button>

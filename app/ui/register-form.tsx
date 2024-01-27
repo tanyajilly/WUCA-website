@@ -12,16 +12,24 @@ export default function RegisterForm() {
         password: "",
         username: "",
     });
+    const [state, setState] = useState<RegisterFormState>();
     const { setUser } = useUser();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const responseData: RegisterFormState = await createUser(userData);
-        console.log(responseData);
-
-        if (responseData.data && setToken(responseData.data)) {
-            setUser({ user: responseData.data.user.username, loading: false });
-            router.replace("/profile");
+        if (responseData?.message === "success") {
+            if (responseData?.data && setToken(responseData.data)) {
+                setUser({
+                    user: responseData.data.user.username,
+                    loading: false,
+                });
+                router.push("/profile");
+            } else {
+                setState({ message: "Failed to log in. Please try again." });
+            }
+        } else {
+            setState(responseData);
         }
     };
 
@@ -34,7 +42,7 @@ export default function RegisterForm() {
         <div className="flex w-full">
             <div className="w-full bg-white border-2 rounded p-8 m-4 md:max-w-sm md:mx-auto">
                 <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter mb-4">
-                    Register
+                    Registration
                 </h1>
                 <form
                     onSubmit={handleSubmit}
@@ -48,12 +56,18 @@ export default function RegisterForm() {
                             Username
                         </label>
                         <input
+                            id="username"
                             className="form-input rounded"
                             type="text"
                             name="username"
                             onChange={(e) => handleChange(e)}
                             required
                         />
+                        {state?.errors?.username && (
+                            <p className="text-red-500">
+                                {state.errors.username[0]}
+                            </p>
+                        )}
                     </div>
                     <div className="flex flex-col mb-4 md:w-full">
                         <label
@@ -63,12 +77,18 @@ export default function RegisterForm() {
                             Email
                         </label>
                         <input
+                            id="email"
                             className="form-input rounded"
                             type="email"
                             name="email"
                             onChange={(e) => handleChange(e)}
                             required
                         />
+                        {state?.errors?.email && (
+                            <p className="text-red-500">
+                                {state.errors.email[0]}
+                            </p>
+                        )}
                     </div>
                     <div className="flex flex-col mb-6 md:w-full">
                         <label
@@ -78,13 +98,22 @@ export default function RegisterForm() {
                             Password
                         </label>
                         <input
+                            id="password"
                             className="form-input rounded"
                             type="password"
                             name="password"
                             onChange={(e) => handleChange(e)}
                             required
                         />
+                        {state?.errors?.username && (
+                            <p className="text-red-500">
+                                {state.errors.username[0]}
+                            </p>
+                        )}
                     </div>
+                    {state?.message && state.message !== "success" && (
+                        <p className="text-red-500">{state.message}</p>
+                    )}
                     <button
                         className="block bg-blue-600 hover:bg-blue-800 text-white text-lg rounded px-4 py-2 mx-auto"
                         type="submit"
