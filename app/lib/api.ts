@@ -1,7 +1,7 @@
 export async function fetcher(url: string, options = {}) {
     let response;
     if (options) {
-        response = await fetch(url, options);
+        response = await fetch(url, { cache: 'no-store' });
     } else {
         response = await fetch(url);
     }

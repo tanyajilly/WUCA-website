@@ -3,18 +3,21 @@ import { type BlocksContent } from '@strapi/blocks-react-renderer';
 export interface Article {
     id: number;
     attributes: {
-        heading: string;
-        content: BlocksContent;
+        basicArticleData: {
+            id: number;
+            title: string;
+            description: string;
+            image?: {
+                [key: string]: any;
+            };
+            author: Author;
+        }
+        pageContent: BlocksContent;
         createdAt: string;
         updatedAt: string;
         publishedAt: string;
         slug: string;
-        image?: {
-            [key: string]: any;
-        };
-        author?:      Author;
         categories?:  Categories;
-        comments?:    Comments;
     };
 }
 
@@ -39,19 +42,6 @@ export interface CategoryAttributes {
     slug:       string;
 }
 
-export interface Comments {
-    data: {
-        id:         number;
-        attributes: CommentAttributes;
-    }[];
-}
-
-export interface CommentAttributes {
-    text:       string;
-    author:     string;
-    updatedAt:  string;
-}
-
 export interface Pagination {
     page: number;
 	pageSize: number;
@@ -73,27 +63,55 @@ export interface SingleArticleResponse {
     error?: Error;
 }
 
-export interface UserResponse {
-    jwt:  string;
-    user: User;
-}
-
-export interface UserData {
-    username:  string;
-    email: string;
-    password?: string;
-}
-
-export interface User extends UserData {
-    id:        number;
-    provider?:  string;
-    confirmed?: boolean;
-    blocked?:   boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
-    avatar?:    string;
-}
 export interface ArticleData {
     id: number;
     slug: string;
 }
+
+export interface NavigationItem {
+    id: number;
+    title: string;
+    type: 'INTERNAL' | 'EXTERNAL';
+    path: string;
+    externalPath: string | null;
+    menuAttached: boolean;
+    collapsed: boolean;
+    parent: NavigationItem | null;
+    items: NavigationItem[] | null;
+}
+
+interface StrapiBaseImage {
+    name: string;
+    hash: string;
+    ext: string;
+    mime: string;
+    width: number;
+    height: number;
+    size: number;
+    url: string;
+  }
+
+  interface StrapiImageFormat extends StrapiBaseImage {
+    path: null | string;
+  }
+  
+  interface StrapiImageAttributes extends StrapiBaseImage {
+    alternativeText: string;
+    caption: string;
+    formats: {
+      thumbnail?: StrapiImageFormat;
+      small?: StrapiImageFormat;
+      medium?: StrapiImageFormat;
+      large?: StrapiImageFormat;
+    };
+    previewUrl: null | string;
+    provider: string;
+    provider_metadata: null | any; // Adjust based on your provider metadata structure
+  }
+  
+  export interface StrapiImage {
+    data: {
+        id: number;
+        attributes: StrapiImageAttributes;
+    }
+  }

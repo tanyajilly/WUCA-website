@@ -114,13 +114,4 @@ describe('Post Component', () => {
         expect(screen.queryByText('Categories:')).not.toBeInTheDocument();
     });
 
-    // Renders the article without comments if they don't exist
-    it('should render the article without comments when they don`t exist', () => {
-
-        // Act
-        render(<Post article={articleMock} />);
-
-        // Assert
-        expect(screen.queryByText('Comments')).not.toBeInTheDocument();
-    });
 });

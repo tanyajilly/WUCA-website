@@ -1,46 +1,42 @@
 'use server';
 import { fetcher } from '@/app/lib/api';
-import { cookies } from 'next/headers';
 
 export async function getArticles(page: number = 1, pageSize: number = 3) {
     try {
-        const articlesResponse = await fetcher(`${process.env.NEXT_PUBLIC_STRAPI_URL}/articles?populate=image&pagination[page]=${page}&pagination[pageSize]=${pageSize}`);
+        const params = new URLSearchParams();
+        params.append('populate[BasicArticleData][populate][0]', 'Image');
+        params.append('populate[BasicArticleData][populate][1]', 'author');
+        params.append('pagination[page]', page.toString());
+        params.append('pagination[pageSize]', pageSize.toString());
+        const queryString = params.toString();
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/articles?${queryString}`;
+        const articlesResponse = await fetcher(url);
+        
         return articlesResponse;
     }
     catch(error) {
-        console.log(error);
+        throw error;
     }
 }
 
 export async function getArticleBySlug(slug: string) {
     try {
-        const jwt = cookies().get('jwt')?.value;
-        const articleResponse = await fetcher(`${process.env.NEXT_PUBLIC_STRAPI_URL}/articles/${slug}`,
-            jwt
-                ? {
-                    headers: {
-                        Authorization: `Bearer ${jwt}`,
-                    },
-                    }
-                : ''
-            );
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/articles/${slug}`;
+        const articleResponse = await fetcher(url, { cache: 'no-store' });
         return articleResponse;
     }
     catch(error) {
-        console.log(error);
+        throw error;
     }
 }
 
-export async function getCurrentUserData() {
-    const jwt = cookies().get('jwt');
-    if (jwt?.value) {
-      return fetcher(`${process.env.NEXT_PUBLIC_STRAPI_URL}/users/me`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${jwt.value}`,
-        },
-      });
-    } else {
-      return;
+export async function getMainNav() {
+    try {
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/navigation/render/main-navigation?type=TREE`;
+        const navResponse = await fetcher(url);
+        return navResponse;
     }
-  }
+    catch(error) {
+        throw error;
+    }
+}

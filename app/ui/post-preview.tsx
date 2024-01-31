@@ -1,10 +1,14 @@
 import Link from 'next/link';
 import Image from 'next/image'
 import { Article } from '@/app/lib/definitions';
-import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 
 export default function PostPreview({ article }: {article: Article}) {
-    const { heading, content, image, slug } = article.attributes;
+    const { basicArticleData, slug } = article.attributes;
+    const {
+        title,
+        description,
+        image
+    } = basicArticleData;
     const { width, height, url } = image?.data?.attributes?.formats?.small || {};
     
     return (
@@ -13,7 +17,7 @@ export default function PostPreview({ article }: {article: Article}) {
                 <Link href={`/blog/${slug}`}>
                     {url && <Image
                         src={url}
-                        alt={heading}
+                        alt={title}
                         width={width}
                         height={height}
                         className="object-cover h-full"
@@ -21,8 +25,8 @@ export default function PostPreview({ article }: {article: Article}) {
                 </Link>
             </div>
             <div>
-                <h2 className="text-lg"><Link href={`/blog/${slug}`}>{heading}</Link></h2>
-                <BlocksRenderer content={content} />
+                <h2 className="text-lg"><Link href={`/blog/${slug}`}>{title}</Link></h2>
+                <p>{description}</p>
             </div>
         </article>
     )

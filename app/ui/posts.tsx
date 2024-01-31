@@ -8,6 +8,7 @@ import PostPreview from '@/app/ui/post-preview';
 import { fetcher } from '@/app/lib/api';
 import { PAGE_SIZE } from '@/app/lib/constants';
 
+
 export default function Posts(
     { articles, isPagination, pageSize = PAGE_SIZE }:
     {
@@ -19,7 +20,8 @@ export default function Posts(
     const [pageIndex, setPageIndex] = useState(1);
     const url = new URL(`${process.env.NEXT_PUBLIC_STRAPI_URL}/articles`);
     const params = new URLSearchParams();
-    params.append('populate', 'image');
+    params.append('populate[BasicArticleData][populate][0]', 'Image');
+    params.append('populate[BasicArticleData][populate][1]', 'author');
     params.append('pagination[page]', pageIndex.toString());
     params.append('pagination[pageSize]', pageSize.toString());
     url.search = params.toString();
@@ -30,7 +32,6 @@ export default function Posts(
     if (error) {
         return <p>Failed to fetch</p>;
     }
-
     return (
         <>
             <section className="flex flex-col gap-10">
