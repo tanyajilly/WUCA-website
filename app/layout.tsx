@@ -4,6 +4,7 @@ import "./globals.css";
 import MainNav from "@/app/ui/nav";
 import Link from "next/link";
 import Image from "next/image";
+import Breadcrumbs from "./ui/breadcrumbs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,6 +37,7 @@ export default function RootLayout({
                         </div>
                     </header>
                     <div className="container mx-auto p-4 flex-1">
+                        <Breadcrumbs />
                         <main>{children}</main>
                     </div>
                 </div>

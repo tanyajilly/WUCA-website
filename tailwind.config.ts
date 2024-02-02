@@ -16,6 +16,18 @@ const config: Config = {
       aspectRatio: {
         '4/3': '4 / 3',
       },
+      colors: {
+        'black-overlay': 'rgba(0, 0, 0, 0.5)',
+      },
+      keyframes: {
+        scaleUp: {
+          '0%': { transform: 'scale(0.5)' },
+          '100%': { transform: 'scale(1)' },
+        }
+      },
+      animation: {
+        'scale-up': 'scaleUp 0.5s ease forwards',
+      }
     },
   },
   plugins: [require('@tailwindcss/forms')({ strategy: 'class' })],

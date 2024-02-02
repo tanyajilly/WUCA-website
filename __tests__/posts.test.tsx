@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import Posts from "@/app/ui/posts";
+import Posts from "@/app/ui/post-listing";
 import { ArticlesResponse } from '@/app/lib/definitions';
 
 describe('Posts', () => {

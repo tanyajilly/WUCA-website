@@ -1,4 +1,4 @@
-import { type BlocksContent } from '@strapi/blocks-react-renderer';
+import { type BlocksContent } from "@strapi/blocks-react-renderer";
 
 export interface Article {
     id: number;
@@ -11,42 +11,42 @@ export interface Article {
                 [key: string]: any;
             };
             author: Author;
-        }
+        };
         pageContent: BlocksContent;
         createdAt: string;
         updatedAt: string;
         publishedAt: string;
         slug: string;
-        categories?:  Categories;
+        categories?: Categories;
     };
 }
 
 export interface Author {
     data: {
-        id:         number;
+        id: number;
         attributes: {
             name: string;
-        }
+        };
     } | null;
 }
 
 export interface Categories {
     data: {
-        id:         number;
+        id: number;
         attributes: CategoryAttributes;
     }[];
 }
 
 export interface CategoryAttributes {
-    name:       string;
-    slug:       string;
+    name: string;
+    slug: string;
 }
 
 export interface Pagination {
     page: number;
-	pageSize: number;
-	pageCount: number;
-	total: number;
+    pageSize: number;
+    pageCount: number;
+    total: number;
 }
 
 export interface ArticlesResponse {
@@ -71,7 +71,7 @@ export interface ArticleData {
 export interface NavigationItem {
     id: number;
     title: string;
-    type: 'INTERNAL' | 'EXTERNAL';
+    type: "INTERNAL" | "EXTERNAL";
     path: string;
     externalPath: string | null;
     menuAttached: boolean;
@@ -89,29 +89,80 @@ interface StrapiBaseImage {
     height: number;
     size: number;
     url: string;
-  }
+}
 
-  interface StrapiImageFormat extends StrapiBaseImage {
+interface StrapiMediaFormat extends StrapiBaseImage {
     path: null | string;
-  }
-  
-  interface StrapiImageAttributes extends StrapiBaseImage {
+}
+
+interface StrapiMediaAttributes extends StrapiBaseImage {
     alternativeText: string;
     caption: string;
-    formats: {
-      thumbnail?: StrapiImageFormat;
-      small?: StrapiImageFormat;
-      medium?: StrapiImageFormat;
-      large?: StrapiImageFormat;
+    formats?: {
+        thumbnail?: StrapiMediaFormat;
+        small?: StrapiMediaFormat;
+        medium?: StrapiMediaFormat;
+        large?: StrapiMediaFormat;
     };
-    previewUrl: null | string;
+    previewUrl: string | undefined;
     provider: string;
     provider_metadata: null | any; // Adjust based on your provider metadata structure
-  }
-  
-  export interface StrapiImage {
+}
+
+export interface StrapiMedia {
     data: {
         id: number;
-        attributes: StrapiImageAttributes;
-    }
-  }
+        attributes: StrapiMediaAttributes;
+    };
+}
+
+export interface Page {
+    id: number;
+    attributes: {
+        name: string;
+        pageContent: BlocksContent;
+        createdAt: string;
+        updatedAt: string;
+        publishedAt: string;
+        slug: string;
+    };
+}
+
+export interface SinglePageResponse {
+    data?: Page;
+    meta: {};
+    error?: Error;
+}
+
+export interface Event {
+    id: number;
+    attributes: {
+        basicArticleData: {
+            id: number;
+            title: string;
+            description: string;
+            image?: {
+                [key: string]: any;
+            };
+        };
+        pageContent: BlocksContent;
+        slug: string;
+        startDate: string;
+        endDate: string;
+        location: string;
+    };
+}
+
+export interface EventsResponse {
+    data?: Event[];
+    meta?: {
+        pagination: Pagination;
+    };
+    error?: Error;
+}
+
+export interface SingleEventResponse {
+    data?: Event;
+    meta: {};
+    error?: Error;
+}

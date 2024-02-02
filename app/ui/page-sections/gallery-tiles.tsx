@@ -1,5 +1,5 @@
 'use client';
-import { StrapiImage } from '@/app/lib/definitions';
+import { StrapiMedia } from '@/app/lib/definitions';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -7,7 +7,7 @@ interface Photo {
     id: number;
     description: string;
     link: string;
-    image: StrapiImage,
+    image: StrapiMedia,
 }
 
 type Props = {
@@ -77,44 +77,23 @@ function Slide({photo, onClick}: SlideProps) {
 
 // components/ImageModal.js
 function ImageModal({ photo, onClose }: ImageModalProps) {
-    const { width, height, url } = photo.image.data.attributes || {};
+    const { image, description } = photo;
+    const { width, height, url } = image.data.attributes || {};
     if (!url) return null;
   
     return (
-      <div className="modal-overlay" onClick={onClose}>
-        <div className="modal-content" onClick={e => e.stopPropagation()}>
+      <div className="modal-overlay fixed top-0 left-0 w-full h-full bg-black-overlay flex items-center justify-center" onClick={onClose}>
+        <div className="relative p-5 bg-white rounded scale-50 animate-scale-up" onClick={e => e.stopPropagation()}>
             <Image
                 src={url}
-                alt={photo.image.data.attributes.alternativeText}
+                alt={image.data.attributes.alternativeText}
                 width={width}
                 height={height}
                 className=""
             />
+            <p>{description}</p>
           <button onClick={onClose}>Close</button>
         </div>
-        <style jsx>{`
-          .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-          .modal-content {
-            position: relative;
-            padding: 20px;
-            background: white;
-            border-radius: 4px;
-          }
-          img {
-            max-width: 100%;
-            height: auto;
-          }
-        `}</style>
       </div>
     );
   };

@@ -14,7 +14,14 @@ export default function Post ({ article }: { article: Article }) {
     const { width, height, url } = image?.data?.attributes || {};
     return (
         <article className="">
-            <div className="w-full rounded-md overflow-hidden">
+            <div className="mb-4">
+                <h1 className="text-2xl">{title}</h1>
+                <div className="article-info">
+                    {formatDateToLocal(publishedAt)} {author?.data && `by ${author.data.attributes.name}`}
+                </div>
+            </div>
+            
+            <div className="w-full rounded-md overflow-hidden mb-4">
                 {url && <Image
                     src={url}
                     alt={title}
@@ -24,10 +31,6 @@ export default function Post ({ article }: { article: Article }) {
                 />}
             </div>
             <div>
-                <h1 className="text-2xl">{title}</h1>
-                <div className="article-info">
-                    {formatDateToLocal(publishedAt)} {author?.data && `by ${author.data.attributes.name}`}
-                </div>
                 { pageContent.map(getContentComponent) }
                 
                 {categories?.data && categories.data.length > 0 && <>

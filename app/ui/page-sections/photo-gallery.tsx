@@ -1,6 +1,4 @@
-'use client';
-import { StrapiImage } from '@/app/lib/definitions';
-import Image from 'next/image';
+import { StrapiMedia } from '@/app/lib/definitions';
 import Gallery from '@/app/ui/page-sections/gallery-tiles';
 import Slider from '@/app/ui/page-sections/slider';
 
@@ -8,7 +6,7 @@ interface Photo {
     id: number;
     description: string;
     link: string;
-    image: StrapiImage,
+    image: StrapiMedia,
 }
 
 type Props = {
@@ -16,11 +14,6 @@ type Props = {
     description: string,
     view: 'slider' | 'tiles',
     photo: [Photo]
-}
-
-type SlideProps = {
-    key: number;
-    photo: Photo
 }
 
 export default function PhotoGallery({
@@ -40,23 +33,5 @@ export default function PhotoGallery({
             }
         </section>
         
-    )
-}
-
-function Slide({photo}: SlideProps) {
-    const { width, height, url } = photo.image.data.attributes?.formats?.medium || {};
-    console.log(photo.image.data.attributes);
-    if (!url) 
-        return;
-    return (
-        <div>
-            <Image
-                src={url}
-                alt={photo.image.data.attributes.alternativeText}
-                width={width}
-                height={height}
-                className="w-full"
-            />
-        </div>
     )
 }

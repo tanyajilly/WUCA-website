@@ -1,14 +1,25 @@
 import TextSection from "../ui/page-sections/text-section";
-import Slider from "../ui/page-sections/photo-gallery";
+import PhotoGallery from "../ui/page-sections/photo-gallery";
+import Video from "../ui/page-sections/video-section"; 
 
 export const getContentComponent = ({ id, __component, ...rest }: any) => {
     let ContentComponent;
 
-    if (__component === "content.text-section"){
+    const DefaultComponent = () => <h1>Component doesn`t exist</h1>;
+    DefaultComponent.displayName = 'DefaultComponent';
+
+    switch (__component) {
+        case "content.text-section":
             ContentComponent = TextSection;
-    }
-    else if (__component === "content.slider"){
-            ContentComponent = Slider;
+            break;
+        case "content.slider":
+            ContentComponent = PhotoGallery;
+            break;
+        case "content.video":
+            ContentComponent = Video;
+            break;
+        default:
+            ContentComponent = DefaultComponent;
     }
 
     return ContentComponent ? <ContentComponent key={`index-${__component}-${id}`} {...rest} /> : null;

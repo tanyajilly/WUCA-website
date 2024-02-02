@@ -20,8 +20,8 @@ export default function Posts(
     const [pageIndex, setPageIndex] = useState(1);
     const url = new URL(`${process.env.NEXT_PUBLIC_STRAPI_URL}/articles`);
     const params = new URLSearchParams();
-    params.append('populate[BasicArticleData][populate][0]', 'Image');
-    params.append('populate[BasicArticleData][populate][1]', 'author');
+    params.append('populate[basicArticleData][populate][0]', 'image');
+    params.append('populate[basicArticleData][populate][1]', 'author');
     params.append('pagination[page]', pageIndex.toString());
     params.append('pagination[pageSize]', pageSize.toString());
     url.search = params.toString();
