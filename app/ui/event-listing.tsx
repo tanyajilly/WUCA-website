@@ -23,6 +23,7 @@ export default function Events(
     params.append('populate[basicArticleData][populate][0]', 'image');
     params.append('pagination[page]', pageIndex.toString());
     params.append('pagination[pageSize]', pageSize.toString());
+    params.append('sort', 'startDate:desc');
     url.search = params.toString();
 
     const { data, error } = useSWR(url.toString(), fetcher, {

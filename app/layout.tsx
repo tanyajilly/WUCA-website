@@ -5,6 +5,7 @@ import MainNav from "@/app/ui/nav";
 import Link from "next/link";
 import Image from "next/image";
 import Breadcrumbs from "./ui/breadcrumbs";
+import Footer from "./ui/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -40,6 +41,7 @@ export default function RootLayout({
                         <Breadcrumbs />
                         <main>{children}</main>
                     </div>
+                    <Footer />
                 </div>
             </body>
         </html>

@@ -1,23 +1,80 @@
-import Image from "next/image";
-import { Event } from "@/app/lib/definitions";
+"use client";
+import { useState } from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import { Event, EventsResponse } from "@/app/lib/definitions";
+import { EventInput } from "@fullcalendar/core";
 import { formatDateToLocal, formatTimeToLocal } from "@/app/lib/utils";
-import { getContentComponent } from "@/app/lib/renderDynamicZone";
+import Link from "next/link";
 
-export default function Event({ event }: { event: Event }) {
-    const {
-        basicArticleData,
-        pageContent,
-        startDate,
-        startTime,
-        endTime,
-        location,
-    } = event.attributes;
-    const { title, image } = basicArticleData;
-    const { width, height, url } = image?.data?.attributes || {};
+type CalendarProps = {
+    eventsList: EventsResponse;
+};
+
+export default function Calendar({ eventsList }: CalendarProps) {
+    const [selectedEvent, setSelectedEvent] = useState<EventInput>();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleEventClick = (clickInfo: any) => {
+        clickInfo.jsEvent.preventDefault();
+        setSelectedEvent(clickInfo.event);
+        setIsModalOpen(true);
+    };
+
+    const events = eventsList.data?.map((el: Event) => {
+        const {
+            startDate,
+            startTime,
+            endTime,
+            slug,
+            basicArticleData,
+            location,
+        } = el.attributes;
+        const { title, description } = basicArticleData;
+        return {
+            title: title,
+            start: startDate,
+            url: slug,
+            display: "block",
+            extendedProps: {
+                description,
+                startTime,
+                endTime,
+                location,
+            },
+        };
+    });
+
     return (
-        <article className="">
-            <div className="mb-4">
-                <h1 className="text-2xl mb-4">{title}</h1>
+        <div className="relative">
+            <FullCalendar
+                plugins={[dayGridPlugin, interactionPlugin]}
+                eventClick={handleEventClick}
+                initialView="dayGridMonth"
+                events={events}
+            />
+            {isModalOpen && selectedEvent && (
+                <EventModal
+                    event={selectedEvent}
+                    onClose={() => setIsModalOpen(false)}
+                />
+            )}
+        </div>
+    );
+}
+
+function EventModal({ event, onClose }) {
+    console.log(event);
+    const startDate = formatDateToLocal(event.start as string);
+    console.log(event.extendedProps.startTime)
+    const startTime = formatTimeToLocal(event.extendedProps.startTime);
+    const endTime = formatTimeToLocal(event.extendedProps.endTime);
+    console.log(startTime)
+    return (
+        <div className="absolute inset-0 bg-black-overlay flex items-center justify-center z-10">
+            <div className="bg-white text-gray-600 p-5 rounded w-[300px]">
+                <h2>{event.title}</h2>
                 <ul className="*:flex *:gap-2 space-y-2">
                     <li>
                         <svg
@@ -52,7 +109,8 @@ export default function Event({ event }: { event: Event }) {
                                 d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                             />
                         </svg>
-                        {formatTimeToLocal(startTime)} {endTime ? " - " + formatTimeToLocal(endTime) : ''}
+                        {startTime}{" "}
+                        {endTime ? " - " + endTime : ""}
                     </li>
                     <li>
                         <svg
@@ -74,23 +132,13 @@ export default function Event({ event }: { event: Event }) {
                                 d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
                             />
                         </svg>
-                        {location}
+                        {event.extendedProps.location}
                     </li>
                 </ul>
+                <p>{event.extendedProps?.description}</p>
+                <Link href={`/events/${event.url}`}>More</Link>
+                <button onClick={onClose}>Close</button>
             </div>
-
-            <div className="w-full rounded-md overflow-hidden mb-4">
-                {url && (
-                    <Image
-                        src={url}
-                        alt={title}
-                        width={width}
-                        height={height}
-                        className="w-full object-cover aspect-video"
-                    />
-                )}
-            </div>
-            {pageContent.map(getContentComponent)}
-        </article>
+        </div>
     );
 }

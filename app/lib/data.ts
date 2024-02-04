@@ -1,13 +1,15 @@
 'use server';
 import { fetcher } from '@/app/lib/api';
+import { PAGE_SIZE } from "@/app/lib/constants";
 
-export async function getArticles(page: number = 1, pageSize: number = 3) {
+export async function getArticles(page: number = 1, pageSize: number = PAGE_SIZE) {
     try {
         const params = new URLSearchParams();
         params.append('populate[basicArticleData][populate][0]', 'image');
         params.append('populate[basicArticleData][populate][1]', 'author');
         params.append('pagination[page]', page.toString());
         params.append('pagination[pageSize]', pageSize.toString());
+        params.append('sort', 'publishedAt:desc');
         const queryString = params.toString();
         const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/articles?${queryString}`;
         const articlesResponse = await fetcher(url);
@@ -46,6 +48,8 @@ export async function getHomepageContent() {
         const params = new URLSearchParams();
         params.append('populate[0]', 'carousel.photo.image');
         params.append('populate[1]', 'about.image');
+        params.append('populate[2]', 'fact.image');
+        params.append('populate[3]', 'warInfo.image');
         const queryString = params.toString();
         const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/homepage?${queryString}`;
         const pageResponse = await fetcher(url, { cache: 'no-store' });
@@ -67,10 +71,11 @@ export async function getMainNav() {
     }
 }
 
-export async function getEvents(page: number = 1, pageSize: number) {
+export async function getEvents(page: number = 1, pageSize: number = PAGE_SIZE) {
     try {
         const params = new URLSearchParams();
         params.append('populate[basicArticleData][populate][0]', 'image');
+        params.append('sort', 'startDate:desc');
         params.append('pagination[page]', page.toString());
         params.append('pagination[pageSize]', pageSize.toString());
         const queryString = params.toString();

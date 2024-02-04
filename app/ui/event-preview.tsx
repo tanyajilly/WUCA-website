@@ -8,7 +8,6 @@ export default function EventPreview({ event }: {event: Event}) {
         basicArticleData,
         slug,
         startDate,
-        endDate,
         location
     } = event.attributes;
     const {

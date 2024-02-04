@@ -17,6 +17,7 @@ const config: Config = {
         '4/3': '4 / 3',
       },
       colors: {
+        link: '#0284c7',
         'black-overlay': 'rgba(0, 0, 0, 0.5)',
       },
       keyframes: {

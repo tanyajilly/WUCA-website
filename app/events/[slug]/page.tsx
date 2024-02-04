@@ -6,10 +6,11 @@ import { SingleEventResponse } from '@/app/lib/definitions';
 export default async function SingleEvent({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const event: SingleEventResponse = await getArticleBySlug(slug, 'events');
-  console.log(event);
+
   if (!event.data) {
     notFound();
   }
+  
   return (
       <Event event={event.data} />
   )

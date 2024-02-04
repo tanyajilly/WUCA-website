@@ -24,6 +24,7 @@ export default function Posts(
     params.append('populate[basicArticleData][populate][1]', 'author');
     params.append('pagination[page]', pageIndex.toString());
     params.append('pagination[pageSize]', pageSize.toString());
+    params.append('sort', 'publishedAt:desc');
     url.search = params.toString();
 
     const { data, error } = useSWR(url.toString(), fetcher, {

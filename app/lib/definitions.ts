@@ -148,7 +148,8 @@ export interface Event {
         pageContent: BlocksContent;
         slug: string;
         startDate: string;
-        endDate: string;
+        startTime: string;
+        endTime: string;
         location: string;
     };
 }

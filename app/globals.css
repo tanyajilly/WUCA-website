@@ -6,6 +6,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --carousel-height: min(400px, 35vw);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,6 +27,7 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+
 .glider-next,
 .glider-prev {
   top: 50% !important;
@@ -37,6 +39,17 @@ body {
 
 .glider-prev {
   left: 0 !important;
+}
+
+.glider-dots {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+a {
+  @apply text-link;
 }
 
 @layer components {

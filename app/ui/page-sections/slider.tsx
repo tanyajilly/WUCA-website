@@ -63,6 +63,7 @@ export default function Slider({ content }: Props) {
                     />
                 </svg>
             }
+            containerElement={ContainerElement}
         >
             {content.map((photo) => {
                 return <Slide key={photo.id} photo={photo} />;
@@ -75,19 +76,23 @@ const LinkWrapper: React.FC<LinkWrapperProps> = ({ url, children }) => {
     return url && isValidUrl(url) ? <a href={url}>{children}</a> : children;
 };
 
+function ContainerElement({ children }: {children: React.ReactNode;}) {
+    return <div className="h-[--carousel-height] overflow-hidden relative mb-4">{children}</div>;
+  }  
+
 function Slide({ photo }: SlideProps) {
     const { image, link, description } = photo;
     const { width, height, url } = image.data.attributes?.formats?.medium || {};
     if (!url) return;
     return (
-        <div className="relative">
+        <div className="relative !h-[--carousel-height]">
             <LinkWrapper url={link}>
                 <Image
                     src={url}
                     alt={image.data.attributes.alternativeText}
                     width={width}
                     height={height}
-                    className="w-full"
+                    className="w-full h-full object-cover"
                 />
                 {description && (
                     <p className="absolute bottom-0 left-0 w-1/2 bg-black-overlay text-white p-4">
