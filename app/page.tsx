@@ -6,12 +6,16 @@ import PostPreviewSmall from "@/app/ui/post-preview-sm";
 import Slider from "@/app/ui/page-sections/slider";
 import TextSection from "@/app/ui/page-sections/text-section";
 import Calendar from "@/app/ui/full-calendar";
+import { notFound } from "next/navigation";
 
 export default async function HomePage() {
 	const newsNumber = 3;
 	const news: ArticlesResponse = await getArticles(1, newsNumber);
 	const events: EventsResponse = await getEvents(1, newsNumber);
 	const homepage = await getHomepageContent();
+	if (!homepage.data) {
+		notFound();
+	}
 	const carousel = homepage.data.attributes.carousel;
 	const about = homepage.data.attributes.about;
 	const fact = homepage.data.attributes.fact;

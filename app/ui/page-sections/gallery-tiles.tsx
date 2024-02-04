@@ -82,8 +82,8 @@ function ImageModal({ photo, onClose }: ImageModalProps) {
     if (!url) return null;
   
     return (
-      <div className="modal-overlay fixed top-0 left-0 w-full h-full bg-black-overlay flex items-center justify-center" onClick={onClose}>
-        <div className="relative p-5 bg-white rounded scale-50 animate-scale-up" onClick={e => e.stopPropagation()}>
+      <div className="fixed top-0 left-0 w-full h-full bg-black-overlay flex items-center justify-center" onClick={onClose}>
+        <div className="relative p-5 bg-white rounded scale-50 animate-scale-up z-10" onClick={e => e.stopPropagation()}>
             <Image
                 src={url}
                 alt={image.data.attributes.alternativeText}
