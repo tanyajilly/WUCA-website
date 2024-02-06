@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import Image from 'next/image'
 import { Event } from '@/app/lib/definitions';
 import { formatDateToLocal } from '@/app/lib/utils';
+import CustomImage from './custom-image';
 
 export default function EventPreview({ event }: {event: Event}) {
     const {
@@ -21,13 +21,13 @@ export default function EventPreview({ event }: {event: Event}) {
         <article className="flex gap-6 w-full">
             <div className="w-1/5 shrink-0 aspect-square rounded-md overflow-hidden">
                 <Link href={`/events/${slug}`}>
-                    {url && <Image
-                        src={url}
-                        alt={title}
+                    <CustomImage
+                        url={url}
+                        title={title}
                         width={width}
                         height={height}
                         className="object-cover h-full"
-                    />}
+                    />
                 </Link>
             </div>
             <div>

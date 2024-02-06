@@ -37,7 +37,7 @@ export default function Post ({ article }: { article: Article }) {
                     <h2>Categories:</h2>
                     <ul>
                         {categories.data.map(cat =>
-                            <li key={cat.id}><Link href={`/blog/category/${cat.attributes.slug}`}>{cat.attributes.name}</Link></li>
+                            <li key={cat.id}><Link href={`/news/category/${cat.attributes.slug}`}>{cat.attributes.name}</Link></li>
                         )}
                     </ul>
                     

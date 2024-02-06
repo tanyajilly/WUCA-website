@@ -14,7 +14,7 @@ export default function PostPreviewSmall({ article }: {article: Article}) {
     return (
         <article className="">
             <div className="aspect-square rounded-md overflow-hidden mb-4">
-                <Link href={`/blog/${slug}`}>
+                <Link href={`/news/${slug}`}>
                     <CustomImage
                         url={url}
                         title={title}
@@ -24,7 +24,7 @@ export default function PostPreviewSmall({ article }: {article: Article}) {
                     />
                 </Link>
             </div>
-            <h3 className="text-lg"><Link href={`/blog/${slug}`}>{title}</Link></h3>
+            <h3 className="text-lg"><Link href={`/news/${slug}`}>{title}</Link></h3>
             <p>{description}</p>
         </article>
     )

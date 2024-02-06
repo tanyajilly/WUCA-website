@@ -4,11 +4,11 @@ import { ArticlesResponse } from "@/app/lib/definitions";
 import { notFound } from "next/navigation";
 
 export default async function NewsListing() {
-    const articles: ArticlesResponse = await getArticles();
+    const articles: ArticlesResponse = await getArticles("facts", 1);
     if (!articles.data) {
         notFound();
     }
     return (
-        <Posts articles={articles} isPagination={true} />
+        <Posts articles={articles} articleType="facts" isPagination={true} />
     );
 }

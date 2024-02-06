@@ -16,7 +16,7 @@ export default function Breadcrumbs() {
 
     // don't show article name as a breadcrumb
     const section = breadcrumbSegments[0];
-    const sectionsList = ["blog", "events", "facts"];
+    const sectionsList = ["news", "events", "facts"];
 
     return (
         <nav aria-label="breadcrumb" className="mb-5">

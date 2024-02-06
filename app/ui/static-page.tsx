@@ -1,7 +1,4 @@
-import Image from 'next/image'
-import Link from 'next/link';
 import { Page } from '@/app/lib/definitions';
-import { formatDateToLocal } from '@/app/lib/utils';
 import { getContentComponent } from '@/app/lib/renderDynamicZone';
 
 export default function Page ({ page }: { page: Page }) {

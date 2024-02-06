@@ -6,7 +6,7 @@ export default async function NotFound() {
       <h2>Page Not Found</h2>
       <p>Could not find requested news page</p>
       <p>
-        View <Link href="/blog">all posts</Link>
+        View <Link href="/news">all posts</Link>
       </p>
     </div>
   )

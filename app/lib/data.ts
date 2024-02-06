@@ -2,7 +2,11 @@
 import { fetcher } from '@/app/lib/api';
 import { PAGE_SIZE } from "@/app/lib/constants";
 
-export async function getArticles(page: number = 1, pageSize: number = PAGE_SIZE) {
+export async function getArticles(articleType: string, page: number = 1, pageSize: number = PAGE_SIZE) {
+    if (!['articles', 'events', 'facts'].includes(articleType)) {
+        throw new Error('Invalid articleType');
+    }
+    
     try {
         const params = new URLSearchParams();
         params.append('populate[basicArticleData][populate][0]', 'image');
@@ -11,9 +15,10 @@ export async function getArticles(page: number = 1, pageSize: number = PAGE_SIZE
         params.append('pagination[pageSize]', pageSize.toString());
         params.append('sort', 'publishedAt:desc');
         const queryString = params.toString();
-        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/articles?${queryString}`;
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/${articleType}?${queryString}`;
+        console.log(url);
         const articlesResponse = await fetcher(url);
-        
+        console.log(articlesResponse);
         return articlesResponse;
     }
     catch(error) {
@@ -21,9 +26,9 @@ export async function getArticles(page: number = 1, pageSize: number = PAGE_SIZE
     }
 }
 
-export async function getArticleBySlug(slug: string, dataType: string) {
+export async function getArticleBySlug(slug: string, articleType: string) {
     try {
-        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/${dataType}/${slug}`;
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/${articleType}/${slug}`;
         const articleResponse = await fetcher(url, { cache: 'no-store' });
         return articleResponse;
     }
@@ -60,29 +65,25 @@ export async function getHomepageContent() {
     }
 }
 
-export async function getMainNav() {
+export async function getHelpPageContent() {
     try {
-        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/navigation/render/main-navigation?type=TREE`;
-        const navResponse = await fetcher(url);
-        return navResponse;
+        const params = new URLSearchParams();
+        params.append('populate', '*');
+        const queryString = params.toString();
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/help?${queryString}`;
+        const pageResponse = await fetcher(url, { cache: 'no-store' });
+        return pageResponse;
     }
     catch(error) {
         throw error;
     }
 }
 
-export async function getEvents(page: number = 1, pageSize: number = PAGE_SIZE) {
+export async function getMainNav() {
     try {
-        const params = new URLSearchParams();
-        params.append('populate[basicArticleData][populate][0]', 'image');
-        params.append('sort', 'startDate:desc');
-        params.append('pagination[page]', page.toString());
-        params.append('pagination[pageSize]', pageSize.toString());
-        const queryString = params.toString();
-        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/events?${queryString}`;
-        const articlesResponse = await fetcher(url);
-        
-        return articlesResponse;
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/navigation/render/main-navigation?type=TREE`;
+        const navResponse = await fetcher(url, { cache: 'no-store' });
+        return navResponse;
     }
     catch(error) {
         throw error;
