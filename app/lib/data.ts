@@ -1,91 +1,95 @@
-'use server';
-import { fetcher } from '@/app/lib/api';
+"use server";
+import { fetcher } from "@/app/lib/api";
 import { PAGE_SIZE } from "@/app/lib/constants";
 
-export async function getArticles(articleType: string, page: number = 1, pageSize: number = PAGE_SIZE) {
-    if (!['articles', 'events', 'facts'].includes(articleType)) {
-        throw new Error('Invalid articleType');
+export async function getArticles(
+    articleType: string,
+    locale: string,
+    page: number = 1,
+    pageSize: number = PAGE_SIZE
+) {
+    if (!["articles", "events", "facts"].includes(articleType)) {
+        throw new Error("Invalid articleType");
     }
-    
+
     try {
         const params = new URLSearchParams();
-        params.append('populate[basicArticleData][populate][0]', 'image');
-        params.append('populate[basicArticleData][populate][1]', 'author');
-        params.append('pagination[page]', page.toString());
-        params.append('pagination[pageSize]', pageSize.toString());
-        params.append('sort', 'publishedAt:desc');
+        params.append("populate[0]", "image");
+        params.append("populate[1]", "author");
+        params.append("pagination[page]", page.toString());
+        params.append("pagination[pageSize]", pageSize.toString());
+        params.append("sort", "publishedAt:desc");
+        params.append("locale", locale);
         const queryString = params.toString();
         const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/${articleType}?${queryString}`;
-        console.log(url);
         const articlesResponse = await fetcher(url);
-        console.log(articlesResponse);
         return articlesResponse;
-    }
-    catch(error) {
+    } catch (error) {
         throw error;
     }
 }
 
-export async function getArticleBySlug(slug: string, articleType: string) {
+export async function getArticleBySlug(slug: string, articleType: string, locale: string) {
     try {
-        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/${articleType}/${slug}`;
-        const articleResponse = await fetcher(url, { cache: 'no-store' });
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/${articleType}/${slug}?locale=${locale}`;
+        const articleResponse = await fetcher(url, { cache: "no-store" });
         return articleResponse;
-    }
-    catch(error) {
+    } catch (error) {
         throw error;
     }
 }
 
-export async function getPageBySlug(slug: string) {
+export async function getPageBySlug(slug: string, locale?: string) {
     try {
-        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/pages/${slug}`;
-        const pageResponse = await fetcher(url, { cache: 'no-store' });
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/pages/${slug}?locale=${locale}`;
+        const pageResponse = await fetcher(url, { cache: "no-store" });
         return pageResponse;
-    }
-    catch(error) {
+    } catch (error) {
         throw error;
     }
 }
 
-export async function getHomepageContent() {
+export async function getHomepageContent(locale: string) {
+    const pageName = locale === 'uk' ? 'homepage-ua' : 'homepage';
     try {
         const params = new URLSearchParams();
-        params.append('populate[0]', 'carousel.photo.image');
-        params.append('populate[1]', 'about.image');
-        params.append('populate[2]', 'fact.image');
-        params.append('populate[3]', 'warInfo.image');
+        params.append("populate[0]", "carousel.photo.image");
+        params.append("populate[1]", "about.image");
+        params.append("populate[2]", "fact.image");
+        params.append("populate[3]", "warInfo.image");
         const queryString = params.toString();
-        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/homepage?${queryString}`;
-        const pageResponse = await fetcher(url, { cache: 'no-store' });
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/${pageName}?${queryString}`;
+        const pageResponse = await fetcher(url, { cache: "no-store" });
         return pageResponse;
-    }
-    catch(error) {
+    } catch (error) {
         throw error;
     }
 }
 
-export async function getHelpPageContent() {
+export async function getHelpPageContent(locale: string) {
     try {
         const params = new URLSearchParams();
-        params.append('populate', '*');
+        params.append("populate", "*");
+        params.append("locale", locale);
         const queryString = params.toString();
-        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/help?${queryString}`;
-        const pageResponse = await fetcher(url, { cache: 'no-store' });
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/helps/?${queryString}`;
+        const pageResponse = await fetcher(url, { cache: "no-store" });
         return pageResponse;
-    }
-    catch(error) {
+    } catch (error) {
         throw error;
     }
 }
 
-export async function getMainNav() {
+export async function getMainNav(locale: string) {
     try {
-        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/navigation/render/main-navigation?type=TREE`;
-        const navResponse = await fetcher(url, { cache: 'no-store' });
+        const params = new URLSearchParams();
+        params.append("type", "TREE");
+        params.append("locale", locale);
+        const queryString = params.toString();
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/navigation/render/main-navigation?${queryString}`;
+        const navResponse = await fetcher(url, { cache: "no-store" });
         return navResponse;
-    }
-    catch(error) {
+    } catch (error) {
         throw error;
     }
 }

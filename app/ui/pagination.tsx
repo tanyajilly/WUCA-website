@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type PaginationProps = {
     pageIndex: number,
@@ -13,6 +14,7 @@ export default function Pagination({
         setPageIndex
     }: PaginationProps) {
 
+    const { t } = useTranslation();
     const handlePreviousClick = useCallback(() => {
         setPageIndex(pageIndex - 1);
     }, [pageIndex, setPageIndex]);
@@ -32,7 +34,7 @@ export default function Pagination({
                 disabled={pageIndex === 1}
                 onClick={handlePreviousClick}
             >
-                Previous
+                {t('prev')}
             </button>
             <button className={clsx(
                 'p-2 rounded text-white bg-blue-400',
@@ -41,7 +43,7 @@ export default function Pagination({
                 disabled={pageIndex === pageCount}
                 onClick={handleNextClick}
             >
-                Next
+                {t('next')}
             </button>
             <span>{`${pageIndex} of ${pageCount}`}</span>
         </div>

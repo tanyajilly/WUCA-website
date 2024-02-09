@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { getMainNav } from '@/app/lib/data';
 import { NavigationItem } from '../lib/definitions';
 
-export default async function Nav() {
-    const nav: NavigationItem[] = await getMainNav();
+export default async function Nav({locale}: {locale: string}) {
+    const nav: NavigationItem[] = await getMainNav(locale);
     
     return (
     <ul

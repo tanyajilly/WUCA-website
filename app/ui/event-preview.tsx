@@ -5,16 +5,14 @@ import CustomImage from './custom-image';
 
 export default function EventPreview({ event }: {event: Event}) {
     const {
-        basicArticleData,
+        title,
+        description,
+        image,
         slug,
         startDate,
         location
     } = event.attributes;
-    const {
-        title,
-        description,
-        image
-    } = basicArticleData;
+
     const { width, height, url } = image?.data?.attributes?.formats?.small || {};
     
     return (

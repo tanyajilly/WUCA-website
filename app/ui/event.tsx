@@ -5,14 +5,14 @@ import { getContentComponent } from "@/app/lib/renderDynamicZone";
 
 export default function Event({ event }: { event: Event }) {
     const {
-        basicArticleData,
+        title,
+        image,
         pageContent,
         startDate,
         startTime,
         endTime,
         location,
     } = event.attributes;
-    const { title, image } = basicArticleData;
     const { width, height, url } = image?.data?.attributes || {};
     return (
         <article className="">

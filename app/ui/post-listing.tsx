@@ -13,22 +13,25 @@ type PostsProps = {
     articleType: "articles" | "facts";
     isPagination?: boolean;
     pageSize?: number;
+    locale: string;
 };
 
 export default function Posts({
     articles,
     articleType,
+    locale,
     isPagination,
     pageSize = PAGE_SIZE,
 }: PostsProps) {
     const [pageIndex, setPageIndex] = useState(1);
     const url = new URL(`${process.env.NEXT_PUBLIC_STRAPI_URL}/${articleType}`);
     const params = new URLSearchParams();
-    params.append("populate[basicArticleData][populate][0]", "image");
-    params.append("populate[basicArticleData][populate][1]", "author");
+    params.append("populate[0]", "image");
+    params.append("populate[1]", "author");
     params.append("pagination[page]", pageIndex.toString());
     params.append("pagination[pageSize]", pageSize.toString());
     params.append("sort", "publishedAt:desc");
+    params.append("locale", locale);
     url.search = params.toString();
 
     const { data, error } = useSWR(url.toString(), fetcher, {

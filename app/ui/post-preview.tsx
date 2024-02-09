@@ -13,8 +13,7 @@ export default function PostPreview({
 }: PostsPreviewProps) {
     const enhancedArticleType =
         articleType === "articles" ? "news" : articleType;
-    const { basicArticleData, slug } = article.attributes;
-    const { title, description, image } = basicArticleData;
+    const { title, description, image, slug } = article.attributes;
     const { width, height, url } =
         image?.data?.attributes?.formats?.small || {};
 

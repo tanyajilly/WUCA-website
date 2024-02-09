@@ -1,15 +1,18 @@
 "use client";
 import { usePathname } from "next/navigation";
+import { useTranslation } from 'react-i18next';
 import Link from "next/link";
 
 export default function Breadcrumbs() {
+    const { t } = useTranslation(['breadcrumbs']);
     const pathname = usePathname();
-    const breadcrumbSegments = pathname.split("/").filter(Boolean);
-
+    const breadcrumbSegments = pathname
+        .split("/")
+        .filter(segment => segment && segment !== "uk");
     const breadcrumbs = breadcrumbSegments.map((segment, index) => {
         const href = "/" + breadcrumbSegments.slice(0, index + 1).join("/");
         const isLast = index === breadcrumbSegments.length - 1;
-        return { href, label: segment, isLast };
+        return { href, label: t(segment), isLast };
     });
 
     if (!breadcrumbs.length) return null;
@@ -22,7 +25,7 @@ export default function Breadcrumbs() {
         <nav aria-label="breadcrumb" className="mb-5">
             <ol>
                 <li className="inline-block">
-                    <Link href="/">Home</Link>
+                    <Link href="/">{t('home')}</Link>
                 </li>
                 {breadcrumbs.map(
                     ({ href, label, isLast }, index) =>

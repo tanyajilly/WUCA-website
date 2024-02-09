@@ -8,22 +8,24 @@ import EventPreview from '@/app/ui/event-preview';
 import { fetcher } from '@/app/lib/api';
 import { PAGE_SIZE } from '@/app/lib/constants';
 
+type EventsProps = {
+    events: EventsResponse,
+    isPagination?: boolean, 
+    pageSize?: number
+    locale: string;
+};
 
 export default function Events(
-    { events, isPagination, pageSize = PAGE_SIZE }:
-    {
-        events: EventsResponse,
-        isPagination?: boolean, 
-        pageSize?: number
-    }) {
+    { events, locale, isPagination, pageSize = PAGE_SIZE }: EventsProps) {
 
     const [pageIndex, setPageIndex] = useState(1);
     const url = new URL(`${process.env.NEXT_PUBLIC_STRAPI_URL}/events`);
     const params = new URLSearchParams();
-    params.append('populate[basicArticleData][populate][0]', 'image');
+    params.append('populate[0]', 'image');
     params.append('pagination[page]', pageIndex.toString());
     params.append('pagination[pageSize]', pageSize.toString());
     params.append('sort', 'startDate:desc');
+    params.append("locale", locale);
     url.search = params.toString();
 
     const { data, error } = useSWR(url.toString(), fetcher, {

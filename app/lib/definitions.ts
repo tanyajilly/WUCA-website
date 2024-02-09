@@ -3,15 +3,12 @@ import { type BlocksContent } from "@strapi/blocks-react-renderer";
 export interface Article {
     id: number;
     attributes: {
-        basicArticleData: {
-            id: number;
-            title: string;
-            description: string;
-            image?: {
-                [key: string]: any;
-            };
-            author: Author;
+        title: string;
+        description: string;
+        image?: {
+            [key: string]: any;
         };
+        author: Author;
         pageContent: BlocksContent;
         createdAt: string;
         updatedAt: string;
@@ -137,13 +134,10 @@ export interface SinglePageResponse {
 export interface Event {
     id: number;
     attributes: {
-        basicArticleData: {
-            id: number;
-            title: string;
-            description: string;
-            image?: {
-                [key: string]: any;
-            };
+        title: string;
+        description: string;
+        image?: {
+            [key: string]: any;
         };
         pageContent: BlocksContent;
         slug: string;
@@ -166,4 +160,12 @@ export interface SingleEventResponse {
     data?: Event;
     meta: {};
     error?: Error;
+}
+
+export interface AccordionData {
+    id: number;
+    attributes: {
+        question: string;
+        answer: string;
+    };
 }

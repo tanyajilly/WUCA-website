@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
+import ukLocale from '@fullcalendar/core/locales/uk';
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Event, EventsResponse } from "@/app/lib/definitions";
@@ -10,6 +11,7 @@ import Link from "next/link";
 
 type CalendarProps = {
     eventsList: EventsResponse;
+    locale: string;
 };
 
 type CalendarModalProps = {
@@ -17,9 +19,10 @@ type CalendarModalProps = {
     onClose: () => void;
 };
 
-export default function Calendar({ eventsList }: CalendarProps) {
+export default function Calendar({ eventsList, locale }: CalendarProps) {
     const [selectedEvent, setSelectedEvent] = useState<EventInput>();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const calendarLocale = locale === 'uk' ? ukLocale : undefined;
 
     const handleEventClick = (clickInfo: any) => {
         clickInfo.jsEvent.preventDefault();
@@ -29,14 +32,15 @@ export default function Calendar({ eventsList }: CalendarProps) {
 
     const events = eventsList.data?.map((el: Event) => {
         const {
+            title,
+            description,
             startDate,
             startTime,
             endTime,
             slug,
-            basicArticleData,
             location,
         } = el.attributes;
-        const { title, description } = basicArticleData;
+
         return {
             title: title,
             start: startDate,
@@ -58,6 +62,7 @@ export default function Calendar({ eventsList }: CalendarProps) {
                 eventClick={handleEventClick}
                 initialView="dayGridMonth"
                 events={events}
+                locale={calendarLocale}
             />
             {isModalOpen && selectedEvent && (
                 <EventModal
@@ -75,7 +80,7 @@ function EventModal({ event, onClose }: CalendarModalProps) {
     const endTime = formatTimeToLocal(event.extendedProps?.endTime);
     return (
         <div className="absolute inset-0 bg-black-overlay flex items-center justify-center z-10">
-            <div className="bg-white text-gray-600 p-5 rounded w-[300px]">
+            <div className="relative bg-white text-gray-600 p-5 rounded w-[300px]">
                 <h2>{event.title}</h2>
                 <ul className="*:flex *:gap-2 space-y-2">
                     <li>
@@ -139,7 +144,24 @@ function EventModal({ event, onClose }: CalendarModalProps) {
                 </ul>
                 <p>{event.extendedProps?.description}</p>
                 <Link href={`/events/${event.url}`}>More</Link>
-                <button onClick={onClose}>Close</button>
+                <button className="absolute top-0 right-0" onClick={onClose}>
+                    <svg
+                        className="h-8 w-8 text-slate-700"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        strokeWidth="2"
+                        stroke="currentColor"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    >
+                        {" "}
+                        <path stroke="none" d="M0 0h24v24H0z" />{" "}
+                        <line x1="18" y1="6" x2="6" y2="18" />{" "}
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
             </div>
         </div>
     );

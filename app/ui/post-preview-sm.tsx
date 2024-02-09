@@ -3,12 +3,12 @@ import CustomImage from '@/app/ui/custom-image';
 import { Article } from '@/app/lib/definitions';
 
 export default function PostPreviewSmall({ article }: {article: Article}) {
-    const { basicArticleData, slug } = article.attributes;
     const {
         title,
         description,
-        image
-    } = basicArticleData;
+        image,
+        slug
+    } = article.attributes;
     const { width, height, url } = image?.data?.attributes?.formats?.thumbnail || {};
     
     return (
