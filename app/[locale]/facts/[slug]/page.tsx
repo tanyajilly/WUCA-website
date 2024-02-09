@@ -20,5 +20,5 @@ export default async function SingleFact({ params }: SingleFactPageProps) {
     if (!article.data) {
         notFound();
     }
-    return <Post article={article.data} />;
+    return <Post article={article.data} locale={locale} />;
 }
