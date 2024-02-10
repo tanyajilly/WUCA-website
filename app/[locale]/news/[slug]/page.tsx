@@ -22,9 +22,9 @@ export async function generateMetadata(
         locale
     );
     const previousImages = (await parent).openGraph?.images || [];
-
     return {
         title: article.data?.attributes.title,
+        description:  article.data?.attributes.description || (await parent).description,
         openGraph: {
             images: [
                 article.data?.attributes.image?.data?.attributes.url,

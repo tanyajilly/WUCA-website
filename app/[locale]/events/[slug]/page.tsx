@@ -21,6 +21,7 @@ export async function generateMetadata(
   
   return {
       title: event.data?.attributes.title,
+      description:  event.data?.attributes.description || (await parent).description,
       openGraph: {
         images: [event.data?.attributes.image?.data?.attributes.url, ...previousImages],
       },
