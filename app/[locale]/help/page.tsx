@@ -1,12 +1,18 @@
 import { getHelpPageContent } from "@/app/lib/data";
 import Accordion from "@/app/ui/page-sections/accordion";
 import { notFound } from "next/navigation";
+import type { Metadata } from 'next';
 
 type HelpPageProps = {
     params: {
         locale: string;
     };
 };
+
+export const metadata: Metadata = {
+	title: 'Help',
+	description: 'Information for Ukrainians in the UK',
+}
 
 export default async function HelpPage({ params: { locale } }: HelpPageProps) {
 	const content = await getHelpPageContent(locale);

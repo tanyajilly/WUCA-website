@@ -1,4 +1,5 @@
 import Image from "next/image";
+import ShareButtons from "./share-buttons";
 import { Event } from "@/app/lib/definitions";
 import { formatDateToLocal, formatTimeToLocal } from "@/app/lib/utils";
 import { getContentComponent } from "@/app/lib/renderDynamicZone";
@@ -12,6 +13,7 @@ export default function Event({ event }: { event: Event }) {
         startTime,
         endTime,
         location,
+        description,
     } = event.attributes;
     const { width, height, url } = image?.data?.attributes || {};
     return (
@@ -52,7 +54,8 @@ export default function Event({ event }: { event: Event }) {
                                 d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                             />
                         </svg>
-                        {formatTimeToLocal(startTime)} {endTime ? " - " + formatTimeToLocal(endTime) : ''}
+                        {formatTimeToLocal(startTime)}{" "}
+                        {endTime ? " - " + formatTimeToLocal(endTime) : ""}
                     </li>
                     <li>
                         <svg
@@ -91,6 +94,9 @@ export default function Event({ event }: { event: Event }) {
                 )}
             </div>
             {pageContent.map(getContentComponent)}
+            <div className="mt-4">
+                <ShareButtons title={title} text={description} />
+            </div>
         </article>
     );
 }

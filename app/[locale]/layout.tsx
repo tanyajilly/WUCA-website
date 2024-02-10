@@ -13,8 +13,21 @@ import TranslationsProvider from "../context/translations";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "WUCA",
-    description: "Winchester Ukrainian Cultural Association",
+    title: {
+        template: '%s | WUCA',
+        default: 'Winchester Ukrainian Cultural Association',
+      },
+    description: "The Winchester Ukrainian Cultural Association unites the Ukrainian community in Hampshire, offering cultural preservation, educational programs, and support for Ukrainians in the UK.",
+    keywords: ['Winchester', 'Ukraine', 'Winchester Ukrainian Association', 'Ukrainian Heritage', 'Cultural Integration', 'Ukrainian Support Hampshire', 'Ukrainian Events', 'Community Support', 'Ukrainian Art', 'Educational Programs', 'Volunteer Opportunities', 'Traditional Events', 'Refugees Support'],
+    alternates: {
+        canonical: '/',
+        languages: {
+        'uk-UA': '/uk',
+        },
+    },
+    openGraph: {
+        images: '/logo.jpg',
+    },
 };
 
 export function generateStaticParams() {
