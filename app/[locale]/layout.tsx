@@ -19,6 +19,7 @@ export const metadata: Metadata = {
       },
     description: "The Winchester Ukrainian Cultural Association unites the Ukrainian community in Hampshire, offering cultural preservation, educational programs, and support for Ukrainians in the UK.",
     keywords: ['Winchester', 'Ukraine', 'Winchester Ukrainian Association', 'Ukrainian Heritage', 'Cultural Integration', 'Ukrainian Support Hampshire', 'Ukrainian Events', 'Community Support', 'Ukrainian Art', 'Educational Programs', 'Volunteer Opportunities', 'Traditional Events', 'Refugees Support'],
+    metadataBase: new URL('https://wuca.uk'),
     alternates: {
         canonical: '/',
         languages: {
