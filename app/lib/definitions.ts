@@ -68,13 +68,13 @@ export interface ArticleData {
 export interface NavigationItem {
     id: number;
     title: string;
-    type: "INTERNAL" | "EXTERNAL";
+    type: "INTERNAL" | "EXTERNAL" | "WRAPPER";
     path: string;
-    externalPath: string | null;
+    external: boolean;
     menuAttached: boolean;
     collapsed: boolean;
     parent: NavigationItem | null;
-    items: NavigationItem[] | null;
+    items: NavigationItem[];
 }
 
 interface StrapiBaseImage {

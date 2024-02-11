@@ -2,12 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import MainNav from "@/app/ui/nav";
 import LanguageSelector from "@/app/ui/lang-selector";
+import { getMainNav } from '@/app/lib/data';
+import { NavigationItem } from '@/app/lib/definitions';
 
 export default async function Header({locale}: {locale: string}) {
-    
+    const navItems: NavigationItem[] = await getMainNav(locale);
     return (
-        <header className="w-full bg-white text-black mb-2 h-[100px]">
-            <div className="container mx-auto flex p-4 items-center min-h-full">
+        <header className="relative w-full bg-white text-black mb-2 h-[100px] z-10">
+            <div className="container max-w-screen-xl flex items-center min-h-full">
                 <Link className="mr-auto" href="/">
                     <Image
                         className="max-w-20"
@@ -17,7 +19,7 @@ export default async function Header({locale}: {locale: string}) {
                         height="100"
                     />
                 </Link>
-                <MainNav locale={locale} />
+                <MainNav items={navItems} />
                 <LanguageSelector />
             </div>
         </header>  

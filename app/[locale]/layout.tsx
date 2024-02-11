@@ -56,7 +56,7 @@ export default async function RootLayout({
                 >
                     <div className="flex min-h-screen flex-col items-center justify-between">
                         <Header locale={locale} />
-                        <div className="container mx-auto p-4 flex-1">
+                        <div className="container max-w-screen-xl flex-1">
                             <Breadcrumbs />
                             <main>{children}</main>
                         </div>

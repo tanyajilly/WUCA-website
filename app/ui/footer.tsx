@@ -5,7 +5,7 @@ export default async function Footer({locale}: {locale: string}) {
     const { t } = await initTranslations(locale, ['default']);
     return (
         <footer className="w-full bg-gray-600 text-white py-4">
-            <div className="container mx-auto flex p-4">
+            <div className="container max-w-screen-xl flex">
                 <div className="flex-1">
                     <Link className="mb-3" href="/">
                         <Image
