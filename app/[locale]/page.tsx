@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function ComingSoon() {
 	return (
-		<div className="fixed w-screen h-screen inset-0 bg-white flex flex-col items-center justify-center p-4">
+		<div className="fixed w-screen h-screen inset-0 bg-white flex flex-col items-center justify-center p-4 z-20">
 			<Image
 				className=""
 				src="/logo.jpg"
