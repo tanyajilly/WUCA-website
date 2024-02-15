@@ -131,6 +131,8 @@ export interface SinglePageResponse {
     error?: Error;
 }
 
+export type DayOfWeek = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
+
 export interface Event {
     id: number;
     attributes: {
@@ -142,9 +144,13 @@ export interface Event {
         pageContent: BlocksContent;
         slug: string;
         startDate: string;
-        startTime: string;
-        endTime: string;
+        endDate?: string;
+        startTime?: string;
+        endTime?: string;
         location: string;
+        isRepeatable: boolean;
+        repeatFrequency?: 'weekly' | 'biweekly';
+        dayOfWeek?: DayOfWeek;
     };
 }
 

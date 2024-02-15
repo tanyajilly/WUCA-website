@@ -3,6 +3,7 @@ import { getArticles } from "@/app/lib/data";
 import { EventsResponse } from "@/app/lib/definitions";
 import { notFound } from "next/navigation";
 import type { Metadata } from 'next';
+import Calendar from "@/app/ui/full-calendar";
 
 type EventsPageProps = {
     params: {
@@ -20,5 +21,12 @@ export default async function EventsPage({ params }: EventsPageProps) {
     if (!events.data || events.data.length === 0) {
         notFound();
     }
-    return <Events events={events} isPagination={true} locale={locale} />;
+    return (
+        <>
+            <Calendar eventsList={events} locale={locale} />
+            <div className="h-8"></div>
+            <Events events={events} isPagination={true} locale={locale} />
+        </>
+    )
+    
 }

@@ -58,7 +58,7 @@ export default async function RootLayout({
                         <Header locale={locale} />
                         <div className="container max-w-screen-xl flex-1">
                             <Breadcrumbs />
-                            <main>{children}</main>
+                            <main className="pb-4">{children}</main>
                         </div>
                         <Footer locale={locale} />
                     </div>

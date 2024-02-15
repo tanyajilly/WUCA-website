@@ -83,7 +83,7 @@ function ImageModal({ photo, onClose }: ImageModalProps) {
 
     return (
         <div
-            className="fixed top-0 left-0 w-full h-full bg-black-overlay flex items-center justify-center"
+            className="fixed z-10 top-0 left-0 w-full h-full bg-black-overlay flex items-center justify-center"
             onClick={onClose}
         >
             <div

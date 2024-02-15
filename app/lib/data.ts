@@ -20,6 +20,12 @@ export async function getArticles(
         params.append("pagination[pageSize]", pageSize.toString());
         params.append("sort", "publishedAt:desc");
         params.append("locale", locale);
+        // upcoming events, exclude repeatable
+        if (articleType === 'events') {
+            const today = new Date().toISOString().split('T')[0];
+            params.append("filters[$and][0][startDate][$gte]", today);
+            params.append("filters[$and][1][isRepeatable][$eq]", 'false');
+        }
         const queryString = params.toString();
         const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/${articleType}?${queryString}`;
         const articlesResponse = await fetcher(url);

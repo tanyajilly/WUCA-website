@@ -1,7 +1,7 @@
 "use client";
 
 import useSWR from "swr";
-import { useState } from "react";
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { ArticlesResponse, Article } from "@/app/lib/definitions";
 import Pagination from "@/app/ui/pagination";
 import PostPreview from "@/app/ui/post-preview";
@@ -23,7 +23,10 @@ export default function Posts({
     isPagination,
     pageSize = PAGE_SIZE,
 }: PostsProps) {
-    const [pageIndex, setPageIndex] = useState(1);
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const pageIndex = parseInt(searchParams.get('page') || '1', 10);
     const url = new URL(`${process.env.NEXT_PUBLIC_STRAPI_URL}/${articleType}`);
     const params = new URLSearchParams();
     params.append("populate[0]", "image");
@@ -33,6 +36,10 @@ export default function Posts({
     params.append("sort", "publishedAt:desc");
     params.append("locale", locale);
     url.search = params.toString();
+
+    const setPageIndex = (newPageIndex: number) => {
+        router.push(`${pathname}?page=${newPageIndex}`);
+    };
 
     const { data, error } = useSWR(url.toString(), fetcher, {
         fallbackData: articles,

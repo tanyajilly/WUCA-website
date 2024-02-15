@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 type PaginationProps = {
     pageIndex: number,
     pageCount: number,
-    setPageIndex: React.Dispatch<React.SetStateAction<number>>;
+    setPageIndex: (index: number) => void;
 }
 
 export default function Pagination({ 

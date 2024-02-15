@@ -1,13 +1,37 @@
 "use client";
 import { useState } from "react";
+import useSWR from "swr";
+import {
+    add,
+    sub,
+    isBefore,
+    addWeeks,
+    formatISO,
+    parseISO,
+    addMonths,
+    getDay,
+    setDay,
+    compareAsc,
+} from "date-fns";
 import FullCalendar from "@fullcalendar/react";
-import ukLocale from '@fullcalendar/core/locales/uk';
+import ukLocale from "@fullcalendar/core/locales/uk";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { Event, EventsResponse } from "@/app/lib/definitions";
+import { Event, EventsResponse, DayOfWeek } from "@/app/lib/definitions";
 import { EventInput } from "@fullcalendar/core";
 import { formatDateToLocal, formatTimeToLocal } from "@/app/lib/utils";
 import Link from "next/link";
+import { fetcher } from "@/app/lib/api";
+
+const dayOfWeekMap: { [key in DayOfWeek]: number } = {
+    Monday: 1,
+    Tuesday: 2,
+    Wednesday: 3,
+    Thursday: 4,
+    Friday: 5,
+    Saturday: 6,
+    Sunday: 0,
+};
 
 type CalendarProps = {
     eventsList: EventsResponse;
@@ -19,10 +43,81 @@ type CalendarModalProps = {
     onClose: () => void;
 };
 
+const generateRepeatedEvents = (event: Event) => {
+    const { startDate, endDate, dayOfWeek, repeatFrequency } = event.attributes;
+    const today = new Date();
+    const oneMonthAgo = sub(today, { months: 1 });
+    const twoMonthsFromNow = add(today, { months: 2 });
+    const updatedStartDate =
+        compareAsc(startDate, oneMonthAgo) < 0
+            ? oneMonthAgo
+            : parseISO(startDate);
+    const updatedEndDate = endDate
+        ? compareAsc(endDate, twoMonthsFromNow) <= 0
+            ? parseISO(endDate)
+            : twoMonthsFromNow
+        : twoMonthsFromNow;
+    const instances = [];
+    let nextDate: Date = updatedStartDate;
+
+    // Adjust the first occurrence to the selected day of the week if necessary
+    if (dayOfWeek && dayOfWeekMap[dayOfWeek] !== undefined) {
+        const dayCode = dayOfWeekMap[dayOfWeek];
+        if (getDay(updatedStartDate) !== dayCode) {
+            nextDate = setDay(updatedStartDate, dayCode, { weekStartsOn: 1 });
+        }
+    }
+
+    while (isBefore(nextDate, updatedEndDate)) {
+        instances.push({
+            ...event,
+            id: `${event.id}-${formatISO(nextDate)}`,
+            attributes: {
+                ...event.attributes,
+                startDate: formatISO(nextDate, { representation: "date" }),
+                endDate: null,
+            },
+        });
+        nextDate = addWeeks(nextDate, repeatFrequency === "weekly" ? 1 : 2);
+
+        // Ensure the event repeats on the correct day of the week
+        if (dayOfWeek && dayOfWeekMap[dayOfWeek] !== undefined) {
+            nextDate = setDay(nextDate, dayOfWeekMap[dayOfWeek], {
+                weekStartsOn: 1,
+            });
+        }
+    }
+    return instances;
+};
+
 export default function Calendar({ eventsList, locale }: CalendarProps) {
     const [selectedEvent, setSelectedEvent] = useState<EventInput>();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const calendarLocale = locale === 'uk' ? ukLocale : undefined;
+    const calendarLocale = locale === "uk" ? ukLocale : undefined;
+
+    const oneMonthAgo = sub(new Date(), { months: 1 });
+    const formattedMonthAgoDate = formatISO(oneMonthAgo, {
+        representation: "date",
+    });
+    const url = new URL(`${process.env.NEXT_PUBLIC_STRAPI_URL}/events`);
+    const params = new URLSearchParams();
+    params.append("locale", locale);
+    // Filter for upcoming events or repeatable + include last month events
+    const today = new Date().toISOString().split("T")[0]; // Format as 'YYYY-MM-DD'
+    params.append("filters[$or][0][startDate][$gte]", formattedMonthAgoDate);
+    params.append("filters[$or][1][isRepeatable][$eq]", "true");
+    url.search = params.toString();
+
+    const { data: calendarEventsList, error } = useSWR(
+        url.toString(),
+        fetcher,
+        {
+            fallbackData: eventsList,
+        }
+    );
+    if (error) {
+        return <p>Failed to fetch</p>;
+    }
 
     const handleEventClick = (clickInfo: any) => {
         clickInfo.jsEvent.preventDefault();
@@ -30,39 +125,64 @@ export default function Calendar({ eventsList, locale }: CalendarProps) {
         setIsModalOpen(true);
     };
 
-    const events = eventsList.data?.map((el: Event) => {
+    const events = calendarEventsList.data?.flatMap((el: Event) => {
         const {
             title,
             description,
             startDate,
+            endDate,
             startTime,
             endTime,
             slug,
             location,
+            isRepeatable,
+            repeatFrequency,
+            dayOfWeek,
         } = el.attributes;
 
-        return {
-            title: title,
-            start: startDate,
-            url: slug,
-            display: "block",
-            extendedProps: {
-                description,
-                startTime,
-                endTime,
-                location,
-            },
-        };
+        if (isRepeatable && repeatFrequency && dayOfWeek) {
+            return generateRepeatedEvents(el).map((repeatedEvent) => ({
+                title: title,
+                start: repeatedEvent.attributes.startDate,
+                url: slug,
+                display: "block",
+                backgroundColor: "#e879f9",
+                borderColor: "#e879f9",
+                extendedProps: {
+                    description,
+                    startTime,
+                    endTime,
+                    location,
+                },
+            }));
+        } else {
+            return [
+                {
+                    title: title,
+                    start: startDate,
+                    end: endDate,
+                    url: slug,
+                    display: "block",
+                    extendedProps: {
+                        description,
+                        startTime,
+                        endTime,
+                        location,
+                    },
+                },
+            ];
+        }
     });
 
     return (
-        <div className="relative">
+        <div className="relative max-w-[800px]">
             <FullCalendar
                 plugins={[dayGridPlugin, interactionPlugin]}
                 eventClick={handleEventClick}
                 initialView="dayGridMonth"
                 events={events}
                 locale={calendarLocale}
+                aspectRatio={1.75}
             />
             {isModalOpen && selectedEvent && (
                 <EventModal
@@ -116,8 +236,7 @@ function EventModal({ event, onClose }: CalendarModalProps) {
                                 d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                             />
                         </svg>
-                        {startTime}{" "}
-                        {endTime ? " - " + endTime : ""}
+                        {startTime} {endTime ? " - " + endTime : ""}
                     </li>
                     <li>
                         <svg
