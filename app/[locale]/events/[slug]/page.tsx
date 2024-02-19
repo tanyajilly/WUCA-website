@@ -37,7 +37,7 @@ export default async function SingleEvent({ params }: SingleEventPageProps) {
   }
   
   return (
-      <Event event={event.data} />
+      <Event event={event.data} locale={locale} />
   )
 }
 

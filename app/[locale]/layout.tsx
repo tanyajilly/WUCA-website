@@ -44,7 +44,7 @@ export default async function RootLayout({
         locale: string;
     };
 }) {
-    const i18nNamespaces = ['default', 'home', 'breadcrumbs', 'error'];
+    const i18nNamespaces = ['default', 'home', 'breadcrumbs', 'error', 'date'];
     const { resources } = await initTranslations(locale, i18nNamespaces);
     return (
         <html lang={locale} dir={dir(locale)}>

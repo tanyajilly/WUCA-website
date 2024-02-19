@@ -18,8 +18,8 @@ export default function PostPreview({
         image?.data?.attributes?.formats?.small || {};
 
     return (
-        <article className="flex gap-6 w-full">
-            <div className="w-1/5 shrink-0 aspect-square rounded-md overflow-hidden">
+        <article className="flex gap-6 w-full items-start">
+            <div className="w-1/5 min-w-24 shrink-0 aspect-square rounded-md overflow-hidden ">
                 <Link href={`/${enhancedArticleType}/${slug}`}>
                     <CustomImage
                         url={url}

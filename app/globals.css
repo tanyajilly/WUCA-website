@@ -48,6 +48,12 @@ body {
   transform: translateX(-50%);
 }
 
+@media (max-width: 767px) {
+  .fc .fc-toolbar-title {
+    font-size: 1.2em;
+  }
+}
+
 a {
   @apply text-link;
 }

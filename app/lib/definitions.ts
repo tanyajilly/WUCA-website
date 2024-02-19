@@ -133,6 +133,16 @@ export interface SinglePageResponse {
 
 export type DayOfWeek = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 
+export const dayOfWeekMap: { [key in DayOfWeek]: number } = {
+    Monday: 1,
+    Tuesday: 2,
+    Wednesday: 3,
+    Thursday: 4,
+    Friday: 5,
+    Saturday: 6,
+    Sunday: 0,
+};
+
 export interface Event {
     id: number;
     attributes: {

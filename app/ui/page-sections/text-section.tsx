@@ -20,12 +20,12 @@ export default function TextSection({
         image?.data?.attributes?.formats?.medium || {};
     return (
         <div
-            className={clsx("flex gap-x-6 mb-4", sectionClassName, {
-                "flex-row-reverse": imagePosition === "right",
+            className={clsx("sm:flex sm:flex-row gap-x-6 mb-4", sectionClassName, {
+                "sm:flex-row-reverse": imagePosition === "right",
             })}
         >
             {url && (
-                <div className={clsx("w-1/4", imageClassName)}>
+                <div className={clsx("w-full sm:w-1/2 md:w-1/4", imageClassName)}>
                     <Image
                         src={url}
                         alt={image.data.attributes.alternativeText}
@@ -35,7 +35,7 @@ export default function TextSection({
                 </div>
             )}
             <div
-                className="flex-1 text-justify"
+                className="sm:flex-1 text-justify"
                 dangerouslySetInnerHTML={{ __html: text }}
             />
         </div>

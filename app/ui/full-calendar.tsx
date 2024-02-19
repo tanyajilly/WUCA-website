@@ -8,7 +8,6 @@ import {
     addWeeks,
     formatISO,
     parseISO,
-    addMonths,
     getDay,
     setDay,
     compareAsc,
@@ -17,21 +16,11 @@ import FullCalendar from "@fullcalendar/react";
 import ukLocale from "@fullcalendar/core/locales/uk";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { Event, EventsResponse, DayOfWeek } from "@/app/lib/definitions";
+import { Event, EventsResponse, dayOfWeekMap } from "@/app/lib/definitions";
 import { EventInput } from "@fullcalendar/core";
 import { formatDateToLocal, formatTimeToLocal } from "@/app/lib/utils";
 import Link from "next/link";
 import { fetcher } from "@/app/lib/api";
-
-const dayOfWeekMap: { [key in DayOfWeek]: number } = {
-    Monday: 1,
-    Tuesday: 2,
-    Wednesday: 3,
-    Thursday: 4,
-    Friday: 5,
-    Saturday: 6,
-    Sunday: 0,
-};
 
 type CalendarProps = {
     eventsList: EventsResponse;
@@ -182,7 +171,8 @@ export default function Calendar({ eventsList, locale }: CalendarProps) {
                 initialView="dayGridMonth"
                 events={events}
                 locale={calendarLocale}
-                aspectRatio={1.75}
+                contentHeight={'auto'}
+                // aspectRatio={1.75}
             />
             {isModalOpen && selectedEvent && (
                 <EventModal

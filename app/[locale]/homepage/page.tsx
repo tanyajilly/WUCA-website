@@ -52,7 +52,7 @@ export default async function HomePage({ params: { locale } }: HomePageProps) {
                     <TextSection
                         {...about}
                         sectionClassName=" items-center"
-                        imageClassName="w-1/2"
+                        imageClassName="md:w-3/6"
                     />
                 </section>
             )}
@@ -88,14 +88,14 @@ export default async function HomePage({ params: { locale } }: HomePageProps) {
                     <TextSection
                         {...fact}
                         sectionClassName=" items-center"
-                        imageClassName="w-1/5"
+                        imageClassName="lg:w-1/5"
                     />
                 </section>
             )}
             {news && (
                 <section className="py-4">
                     <h2 className="text-4xl mb-2">{t("our_news")}</h2>
-                    <section className="grid grid-cols-3 gap-20">
+                    <section className="flex flex-col *:mb-5 md:grid md:grid-cols-3 md:gap-10 lg:gap-20">
                         {news.data &&
                             news.data.map((article: Article) => (
                                 <PostPreviewSmall
@@ -114,7 +114,7 @@ export default async function HomePage({ params: { locale } }: HomePageProps) {
                     <TextSection
                         {...warInfo}
                         sectionClassName="items-center"
-                        imageClassName="w-1/2"
+                        imageClassName="md:w-2/4"
                     />
                 </section>
             )}
