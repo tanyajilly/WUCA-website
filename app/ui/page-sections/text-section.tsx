@@ -8,6 +8,11 @@ type Props = {
     imagePosition: string;
     sectionClassName: string;
     imageClassName: string;
+    Button: {
+        buttonText: string;
+        url: string;
+        className: string
+    }
 };
 export default function TextSection({
     text,
@@ -15,6 +20,7 @@ export default function TextSection({
     image,
     sectionClassName,
     imageClassName,
+    Button
 }: Props) {
     const { width, height, url } =
         image?.data?.attributes?.formats?.medium || {};
@@ -34,10 +40,16 @@ export default function TextSection({
                     />
                 </div>
             )}
-            <div
-                className="sm:flex-1 text-justify"
-                dangerouslySetInnerHTML={{ __html: text }}
-            />
+            <div className="sm:flex-1 text-justify">
+                <div dangerouslySetInnerHTML={{ __html: text }} />
+                {Button && (
+                    <a
+                        className={`btn-primary ${Button.className}`}
+                        href={Button.url}
+                        target="_blank"
+                    >{Button.buttonText}</a>
+                )}
+            </div>
         </div>
     );
 }

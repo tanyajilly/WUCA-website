@@ -63,6 +63,7 @@ export async function getHomepageContent(locale: string) {
         params.append("populate[1]", "about.image");
         params.append("populate[2]", "fact.image");
         params.append("populate[3]", "warInfo.image");
+        params.append("populate[4]", "about.Button");
         const queryString = params.toString();
         const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/${pageName}?${queryString}`;
         const pageResponse = await fetcher(url, { cache: "no-store" });

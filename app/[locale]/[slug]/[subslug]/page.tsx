@@ -2,7 +2,7 @@ import Page from "@/app/ui/static-page";
 import { notFound } from "next/navigation";
 import { getPageBySlug } from "@/app/lib/data";
 import { SinglePageResponse } from "@/app/lib/definitions";
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 
 type StaticPageProps = {
     params: {

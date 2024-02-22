@@ -1,6 +1,7 @@
 import TextSection from "../ui/page-sections/text-section";
 import PhotoGallery from "../ui/page-sections/photo-gallery";
 import Video from "../ui/page-sections/video-section"; 
+import DonateButton from "../ui/page-sections/donate-button"; 
 
 export const getContentComponent = ({ id, __component, ...rest }: any) => {
     let ContentComponent;
@@ -17,6 +18,9 @@ export const getContentComponent = ({ id, __component, ...rest }: any) => {
             break;
         case "content.video":
             ContentComponent = Video;
+            break;
+        case "content.donate-button":
+            ContentComponent = DonateButton;
             break;
         default:
             ContentComponent = DefaultComponent;
