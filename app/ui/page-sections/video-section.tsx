@@ -17,13 +17,14 @@ type Props = {
 
 export default function VideoSection({ title, description, video, youTubeLink }: Props) {
     const youTubeID = extractYouTubeID(youTubeLink);
-    return(
-        <section className="mb-4">
-            {title && <h2 className="text-3xl mb-2">{title}</h2>}
+    return (
+        <section className="mb-8 not-prose">
+            {title && <h2 className="text-3xl font-medium mb-2">{title}</h2>}
             {description && <p className="text-xl mb-2">{description}</p>}
             {
                 youTubeID
                     ? <iframe
+                        className="max-w-full"
                         width="560"
                         height="315"
                         src={`https://www.youtube.com/embed/${youTubeID}`}

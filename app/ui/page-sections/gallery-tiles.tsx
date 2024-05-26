@@ -42,7 +42,7 @@ export default function PhotoTiles({ content }: Props) {
     const selectedPhoto = content.find((el) => el.id === modalImageID);
 
     return (
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {content.map((photo) => {
                 return (
                     <Slide key={photo.id} photo={photo} onClick={openModal} />
@@ -61,7 +61,7 @@ function Slide({ photo, onClick }: SlideProps) {
     if (!url) return;
     return (
         <div
-            className="border-2 border-black p-2"
+            className="p-1 border border-gray-200 rounded-lg cursor-pointer hover:border-gray-500 hover:scale-105 transition-transform"
             onClick={() => onClick(photo.id)}
         >
             <Image
@@ -69,7 +69,7 @@ function Slide({ photo, onClick }: SlideProps) {
                 alt={photo.image.data.attributes.alternativeText}
                 width={width}
                 height={height}
-                className="w-full aspect-4/3 object-cover"
+                className="w-full aspect-4/3 object-cover rounded-md"
             />
         </div>
     );
@@ -87,18 +87,17 @@ function ImageModal({ photo, onClose }: ImageModalProps) {
             onClick={onClose}
         >
             <div
-                className="relative p-5 bg-white rounded scale-50 animate-scale-up z-10"
+                className="relative p-5 bg-white rounded-xl scale-50 animate-scale-up z-10"
                 onClick={(e) => e.stopPropagation()}
             >
-                
                 <Image
                     src={url}
                     alt={image.data.attributes.alternativeText}
                     width={width}
                     height={height}
-                    className=""
+                    className="rounded"
                 />
-                <p>{description}</p>
+                <p className="mt-3">{description}</p>
                 <button className="absolute top-0 right-0" onClick={onClose}>
                     <svg
                         className="h-6 w-6 text-slate-700"

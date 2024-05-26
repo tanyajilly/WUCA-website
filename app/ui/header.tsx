@@ -19,7 +19,7 @@ export default async function Header({ locale }: { locale: string }) {
                         height="100"
                     />
                 </Link>
-                <div className="flex items-center py-4 md:py-8">
+                <div className="flex items-center py-4 md:py-8 flex-row-reverse md:flex-row">
                     <MainNav items={navItems} />
                     <LanguageSelector />
                 </div>

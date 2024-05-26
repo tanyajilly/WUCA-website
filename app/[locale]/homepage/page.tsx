@@ -7,7 +7,7 @@ import {
     EventsResponse,
     Event,
 } from "@/app/lib/definitions";
-import PostPreviewSmall from "@/app/ui/post-preview-sm";
+import PostPreview from "@/app/ui/post-preview";
 import Slider from "@/app/ui/page-sections/slider";
 import TextSection from "@/app/ui/page-sections/text-section";
 import Calendar from "@/app/ui/full-calendar";
@@ -48,17 +48,17 @@ export default async function HomePage({ params: { locale } }: HomePageProps) {
         <>
             {carousel && <Slider content={carousel.photo} />}
             {about && (
-                <section className="bg-slate-200">
+                <section className="mb-10 p-4 border border-gray-200 rounded-xl">
                     <TextSection
                         {...about}
-                        sectionClassName=" items-center"
-                        imageClassName="md:w-3/6"
+                        sectionClassName="!m-0 prose prose-p:font-sans max-w-none items-center"
+                        imageClassName="md:w-3/6 *:lg:m-0"
                     />
                 </section>
             )}
             {events && (
-                <section className="py-4">
-                    <h2 className="text-4xl mb-2">{t("upcoming_events")}</h2>
+                <section className="mb-10">
+                    <h2 className="font-medium text-4xl mb-2 text-center">{t("upcoming_events")}</h2>
                     <Calendar eventsList={events} locale={locale} />
                     <ul className="">
                         {events.data &&
@@ -84,23 +84,24 @@ export default async function HomePage({ params: { locale } }: HomePageProps) {
                 </section>
             )}
             {fact && (
-                <section className="bg-slate-200">
+                <section className="p-4 border border-gray-200 rounded-xl mb-10">
                     <TextSection
                         {...fact}
-                        sectionClassName=" items-center"
-                        imageClassName="lg:w-1/5"
+                        sectionClassName="!m-0 items-center"
+                        imageClassName="lg:w-1/5 mb-2 lg:m-0"
                     />
                 </section>
             )}
             {news && (
-                <section className="py-4">
-                    <h2 className="text-4xl mb-2">{t("our_news")}</h2>
-                    <section className="flex flex-col *:mb-5 md:grid md:grid-cols-3 md:gap-10 lg:gap-20">
+                <section className="mb-10">
+                    <h2 className="font-medium text-4xl mb-4">{t("our_news")}</h2>
+                    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                         {news.data &&
                             news.data.map((article: Article) => (
-                                <PostPreviewSmall
+                                <PostPreview
                                     key={article.id}
                                     article={article}
+                                    articleType="articles"
                                 />
                             ))}
                     </section>
@@ -110,11 +111,11 @@ export default async function HomePage({ params: { locale } }: HomePageProps) {
                 </section>
             )}
             {warInfo && (
-                <section className="bg-slate-200 p-4">
+                <section className="p-4 border border-gray-200 rounded-xl">
                     <TextSection
                         {...warInfo}
-                        sectionClassName="items-center"
-                        imageClassName="md:w-2/4"
+                        sectionClassName="items-center !m-0"
+                        imageClassName="md:w-2/4 mb-2 lg:m-0"
                     />
                 </section>
             )}

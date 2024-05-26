@@ -8,7 +8,7 @@ export default function DonateButton({
 }: Props) {
     return (
         <div
-            className='p-4 flex justify-center'
+            className='p-4 flex justify-center not-prose'
         >
             <a className="btn-primary" href={SUMUP_URL} target="_blank">{buttonText}</a>
         </div>

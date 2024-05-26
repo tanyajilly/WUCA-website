@@ -35,7 +35,7 @@ export default async function Event({ event, locale }: EventProps) {
         date = formatDateToLocal(startDate);
     }
     return (
-        <article className="container px-0 max-w-screen-md prose lg:prose-p:text-xl prose-p:leading-7 prose-p:mt-0">
+        <article className="container px-0 max-w-screen-md">
             <div className="mb-4">
                 <h1 className="text-center text-2xl mb-4 text-4xl font-semibold leading-tight">{title}</h1>
                 <ul className="*:flex *:gap-2 space-y-2 p-0">
@@ -110,7 +110,7 @@ export default async function Event({ event, locale }: EventProps) {
                     />
                 )}
             </div>
-            {pageContent.map(getContentComponent)}
+            <div className="prose max-w-none lg:prose-p:text-xl prose-p:leading-7 prose-p:mt-0">{pageContent.map(getContentComponent)}</div>
             <div className="mt-4">
                 <ShareButtons title={title} text={description} />
             </div>

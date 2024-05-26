@@ -24,6 +24,8 @@ const config: Config = {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
                 "gradient-conic":
                     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+                "slide-overlay":
+                    "linear-gradient(0deg, rgba(20, 22, 36, 0.50) 0%, rgba(20, 22, 36, 0.20) 100%)",
             },
             aspectRatio: {
                 "4/3": "4 / 3",
@@ -46,6 +48,15 @@ const config: Config = {
                     css: {
                         p: {
                             fontFamily: "var(--font-serif), serif",
+                            lineHeight: "1.5",
+                        },
+                        img: {
+                            margin: "0 0 0.5rem",
+                        },
+                        a: {
+                            color: "#0284c7",
+                            textDecoration: "none",
+                            fontWeight: "normal",
                         },
                     },
                 },

@@ -14,7 +14,7 @@ export default function Nav({ items }: { items: NavigationItem[] }) {
     }, [pathname]);
     return (
         <>
-            <button onClick={toggleMenu} className="md:hidden block">
+            <button onClick={toggleMenu} className="md:hidden block ml-4">
                 <svg
                     className="w-6 h-6"
                     fill="none"

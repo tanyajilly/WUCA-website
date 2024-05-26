@@ -35,7 +35,7 @@ export default function Slider({ content }: Props) {
             slidesToShow={1}
             iconLeft={
                 <svg
-                    className="h-10 w-10 text-black"
+                    className="h-8 w-8 md:h-10 md:w-10 text-black bg-white opacity-50 hover:opacity-80"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -50,7 +50,7 @@ export default function Slider({ content }: Props) {
             }
             iconRight={
                 <svg
-                    className="h-10 w-10 text-black"
+                    className="h-8 w-8 md:h-10 md:w-10 text-black bg-white opacity-50 hover:opacity-80"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -76,9 +76,9 @@ const LinkWrapper: React.FC<LinkWrapperProps> = ({ url, children }) => {
     return url && isValidUrl(url) ? <a href={url}>{children}</a> : children;
 };
 
-function ContainerElement({ children }: {children: React.ReactNode;}) {
-    return <div className="h-[--carousel-height] overflow-hidden relative mb-4">{children}</div>;
-  }  
+function ContainerElement({ children }: { children: React.ReactNode; }) {
+    return <div className="h-[--carousel-height] overflow-hidden relative mb-8">{children}</div>;
+}
 
 function Slide({ photo }: SlideProps) {
     const { image, link, description } = photo;
@@ -95,9 +95,12 @@ function Slide({ photo }: SlideProps) {
                     className="w-full h-full object-cover"
                 />
                 {description && (
-                    <p className="absolute bottom-0 left-0 w-1/2 bg-black-overlay text-white p-4">
-                        {description}
-                    </p>
+                    <div className="absolute inset-0 bg-slide-overlay">
+                        <p className="absolute bottom-0 left-0 lg:w-2/3 text-white p-4 lg:p-10 lg:text-4xl font-semibold">
+                            {description}
+                        </p>
+                    </div>
+
                 )}
             </LinkWrapper>
         </div>

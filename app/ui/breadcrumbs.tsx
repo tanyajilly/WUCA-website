@@ -22,7 +22,7 @@ export default function Breadcrumbs() {
     const sectionsList = ["news", "events", "facts"];
 
     return (
-        <nav aria-label="breadcrumb" className="mb-12">
+        <nav aria-label="breadcrumb" className="mb-6 md:mb-12">
             <ol className="flex flex-wrap justify-center">
                 <li>
                     <Link className="text-slate-700 hover:text-blue-700" href="/">{t('home')}</Link>

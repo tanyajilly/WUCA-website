@@ -3,15 +3,7 @@
 @tailwind utilities;
 
 :root {
-    --carousel-height: min(400px, 35vw);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --foreground-rgb: 255, 255, 255;
-        --background-start-rgb: 0, 0, 0;
-        --background-end-rgb: 0, 0, 0;
-    }
+    --carousel-height: min(360px, 40vw);
 }
 
 .glider-next,
@@ -42,11 +34,11 @@
 }
 
 a {
-    @apply text-link;
+    @apply text-link hover:underline;
 }
 
 @layer components {
     .btn-primary {
-        @apply inline-block py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+        @apply inline-block py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 hover:no-underline focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-colors;
     }
 }
