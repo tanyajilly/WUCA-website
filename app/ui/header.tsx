@@ -5,11 +5,11 @@ import LanguageSelector from "@/app/ui/lang-selector";
 import { getMainNav } from '@/app/lib/data';
 import { NavigationItem } from '@/app/lib/definitions';
 
-export default async function Header({locale}: {locale: string}) {
+export default async function Header({ locale }: { locale: string }) {
     const navItems: NavigationItem[] = await getMainNav(locale);
     return (
-        <header className="relative w-full bg-white text-black mb-2 h-[100px] z-10">
-            <div className="container max-w-screen-xl flex items-center min-h-full">
+        <header className="relative w-full bg-white text-slate-700 mb-6 z-10">
+            <div className="container max-w-screen-xl flex items-center">
                 <Link className="mr-auto" href="/">
                     <Image
                         className="max-w-20"
@@ -19,9 +19,11 @@ export default async function Header({locale}: {locale: string}) {
                         height="100"
                     />
                 </Link>
-                <MainNav items={navItems} />
-                <LanguageSelector />
+                <div className="flex items-center py-4 md:py-8">
+                    <MainNav items={navItems} />
+                    <LanguageSelector />
+                </div>
             </div>
-        </header>  
+        </header>
     );
 }

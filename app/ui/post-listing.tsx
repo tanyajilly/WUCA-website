@@ -49,7 +49,7 @@ export default function Posts({
     }
     return (
         <>
-            <section className="flex flex-col gap-10">
+            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {data &&
                     data.data.map((article: Article) => (
                         <PostPreview

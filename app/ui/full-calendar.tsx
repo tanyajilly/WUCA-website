@@ -164,7 +164,7 @@ export default function Calendar({ eventsList, locale }: CalendarProps) {
     });
 
     return (
-        <div className="relative max-w-[800px]">
+        <div className="relative container px-0 max-w-screen-md">
             <FullCalendar
                 plugins={[dayGridPlugin, interactionPlugin]}
                 eventClick={handleEventClick}
@@ -172,7 +172,7 @@ export default function Calendar({ eventsList, locale }: CalendarProps) {
                 events={events}
                 locale={calendarLocale}
                 contentHeight={'auto'}
-                // aspectRatio={1.75}
+            // aspectRatio={1.75}
             />
             {isModalOpen && selectedEvent && (
                 <EventModal
@@ -190,9 +190,9 @@ function EventModal({ event, onClose }: CalendarModalProps) {
     const endTime = formatTimeToLocal(event.extendedProps?.endTime);
     return (
         <div className="absolute inset-0 bg-black-overlay flex items-center justify-center z-10">
-            <div className="relative bg-white text-gray-600 p-5 rounded w-[300px]">
-                <h2>{event.title}</h2>
-                <ul className="*:flex *:gap-2 space-y-2">
+            <div className="relative bg-white text-gray-600 p-4 border border-gray-200 rounded-xl w-11/12 h-5/6 md:w-3/5 md:h-auto">
+                <h2 className="text-lg font-semibold leading-none mb-2">{event.title}</h2>
+                <ul className="*:flex *:gap-2 space-y-1 mb-4">
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -251,11 +251,11 @@ function EventModal({ event, onClose }: CalendarModalProps) {
                         {event.extendedProps?.location}
                     </li>
                 </ul>
-                <p>{event.extendedProps?.description}</p>
-                <Link href={`/events/${event.url}`}>More</Link>
-                <button className="absolute top-0 right-0" onClick={onClose}>
+                <p className="text-sm mb-2">{event.extendedProps?.description}</p>
+                <Link className="hover:underline" href={`/events/${event.url}`}>More</Link>
+                <button className="absolute top-0 right-0 p-2" onClick={onClose}>
                     <svg
-                        className="h-8 w-8 text-slate-700"
+                        className="h-6 w-6 text-slate-700"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"

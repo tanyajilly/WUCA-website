@@ -17,23 +17,23 @@ export default async function Post({ article, locale }: PostProps) {
         article.attributes;
     const { width, height, url } = image?.data?.attributes || {};
     return (
-        <article className="">
+        <article className="container px-0 max-w-screen-md prose lg:prose-p:text-xl prose-p:leading-7 prose-p:mt-0">
             <div className="mb-4">
-                <h1 className="text-2xl">{title}</h1>
+                <h1 className="text-center text-2xl mb-4 text-4xl font-semibold leading-tight">{title}</h1>
                 <div className="article-info">
                     {formatDateToLocal(publishedAt)}{" "}
                     {author?.data && `by ${author.data.attributes.name}`}
                 </div>
             </div>
 
-            <div className="w-full rounded-md overflow-hidden mb-4">
+            <div className="w-full rounded-md overflow-hidden mb-8">
                 {url && (
                     <Image
                         src={url}
                         alt={title}
                         width={width}
                         height={height}
-                        className="w-full object-cover aspect-video"
+                        className="w-full object-cover aspect-video m-0"
                     />
                 )}
             </div>

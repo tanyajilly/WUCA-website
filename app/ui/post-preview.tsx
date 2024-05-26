@@ -18,25 +18,25 @@ export default function PostPreview({
         image?.data?.attributes?.formats?.small || {};
 
     return (
-        <article className="flex gap-6 w-full items-start">
-            <div className="w-1/5 min-w-24 shrink-0 aspect-square rounded-md overflow-hidden ">
+        <article className="p-4 border border-gray-200 rounded-xl">
+            <div className="aspect-video rounded-md overflow-hidden mb-4">
                 <Link href={`/${enhancedArticleType}/${slug}`}>
                     <CustomImage
                         url={url}
                         title={title}
                         width={width}
                         height={height}
-                        className="object-cover h-full"
+                        className="object-cover h-full w-full"
                     />
                 </Link>
             </div>
-            <div>
-                <h2 className="text-lg">
-                    <Link href={`/${enhancedArticleType}/${slug}`}>
+            <div className="p-2">
+                <h2 className="text-2xl leading-5 font-semibold mb-2">
+                    <Link className="text-current" href={`/${enhancedArticleType}/${slug}`}>
                         {title}
                     </Link>
                 </h2>
-                <p>{description}</p>
+                <p className="text-gray-500 text-sm">{description}</p>
             </div>
         </article>
     );

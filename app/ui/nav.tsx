@@ -32,8 +32,8 @@ export default function Nav({ items }: { items: NavigationItem[] }) {
             </button>
             <ul
                 className={clsx(
-                    "absolute w-full top-full left-0 px-8 overflow-hidden",
-                    "md:static md:w-auto md:flex md:justify-between md:px-0 md:space-x-2 md:!max-h-none md:visible",
+                    "absolute w-full top-full left-0 px-6 overflow-hidden",
+                    "md:static md:w-auto md:flex md:justify-between md:px-0 md:space-x-4 lg:space-x-10 md:!max-h-none md:visible",
                     "text-base bg-white",
                     "transition-all duration-100 ease-in",
                     { "max-h-80": isOpen },
@@ -46,9 +46,9 @@ export default function Nav({ items }: { items: NavigationItem[] }) {
                     const hasSubMenu = items.length > 0;
                     const isActive = pathname.includes(path);
                     return (
-                        <li key={id} className="group relative">
+                        <li key={id} className="py-2 md:p-0 group relative">
                             {isWrapper ? (
-                                <span className="md:p-2 py-2 block text-link hover:text-purple-400 cursor-pointer">
+                                <span className="block hover:text-blue-700 cursor-pointer">
                                     {title}
                                 </span>
                             ) : (
@@ -56,8 +56,8 @@ export default function Nav({ items }: { items: NavigationItem[] }) {
                                     href={path}
                                     target={external ? "_blank" : ""}
                                     className={clsx(
-                                        "md:p-2 py-2 block hover:text-purple-400",
-                                        { "text-purple-600": isActive }
+                                        "text-slate-700 hover:text-blue-500",
+                                        { "text-blue-700": isActive }
                                     )}
                                 >
                                     {title}
@@ -81,7 +81,7 @@ export default function Nav({ items }: { items: NavigationItem[] }) {
                                                             ? "_blank"
                                                             : ""
                                                     }
-                                                    className="md:p-2 py-2 block hover:text-purple-400"
+                                                    className="md:p-2 py-2 block text-slate-700 hover:text-blue-700"
                                                 >
                                                     {subTitle}
                                                 </Link>

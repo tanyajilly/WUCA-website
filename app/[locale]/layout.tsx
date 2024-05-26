@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Rubik, Source_Serif_4 } from "next/font/google";
 import "@/app/globals.css";
 
 import Breadcrumbs from "@/app/ui/breadcrumbs";
@@ -10,20 +10,21 @@ import { dir } from 'i18next';
 import initTranslations from '../i18n';
 import TranslationsProvider from "../context/translations";
 
-const inter = Inter({ subsets: ["latin"] });
+const sans = Rubik({ subsets: ["latin", "cyrillic"], variable: '--font-sans' });
+const serif = Source_Serif_4({ subsets: ["latin", "cyrillic"], variable: '--font-serif' });
 
 export const metadata: Metadata = {
     title: {
         template: '%s | WUCA',
         default: 'Winchester Ukrainian Cultural Association',
-      },
+    },
     description: "The Winchester Ukrainian Cultural Association unites the Ukrainian community in Hampshire, offering cultural preservation, educational programs, and support for Ukrainians in the UK.",
     keywords: ['Winchester', 'Ukraine', 'Winchester Ukrainian Association', 'Ukrainian Heritage', 'Cultural Integration', 'Ukrainian Support Hampshire', 'Ukrainian Events', 'Community Support', 'Ukrainian Art', 'Educational Programs', 'Volunteer Opportunities', 'Traditional Events', 'Refugees Support'],
     metadataBase: new URL('https://wuca.uk'),
     alternates: {
         canonical: '/',
         languages: {
-        'uk-UA': '/uk',
+            'uk-UA': '/uk',
         },
     },
     openGraph: {
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
 
 export function generateStaticParams() {
     return i18nConfig.locales.map(locale => ({ locale }));
-  }
+}
 
 export default async function RootLayout({
     children,
@@ -47,8 +48,8 @@ export default async function RootLayout({
     const i18nNamespaces = ['default', 'home', 'breadcrumbs', 'error', 'date'];
     const { resources } = await initTranslations(locale, i18nNamespaces);
     return (
-        <html lang={locale} dir={dir(locale)}>
-            <body className={inter.className}>
+        <html lang={locale} dir={dir(locale)} className={`${sans.variable} ${serif.variable}`}>
+            <body>
                 <TranslationsProvider
                     namespaces={i18nNamespaces}
                     locale={locale}

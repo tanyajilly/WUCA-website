@@ -25,7 +25,7 @@ export default async function Event({ event, locale }: EventProps) {
         dayOfWeek
     } = event.attributes;
     const { width, height, url } = image?.data?.attributes || {};
-    
+
     console.log(event);
     let date: string;
     if (isRepeatable) {
@@ -35,10 +35,10 @@ export default async function Event({ event, locale }: EventProps) {
         date = formatDateToLocal(startDate);
     }
     return (
-        <article className="">
+        <article className="container px-0 max-w-screen-md prose lg:prose-p:text-xl prose-p:leading-7 prose-p:mt-0">
             <div className="mb-4">
-                <h1 className="text-2xl mb-4">{title}</h1>
-                <ul className="*:flex *:gap-2 space-y-2">
+                <h1 className="text-center text-2xl mb-4 text-4xl font-semibold leading-tight">{title}</h1>
+                <ul className="*:flex *:gap-2 space-y-2 p-0">
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -99,14 +99,14 @@ export default async function Event({ event, locale }: EventProps) {
                 </ul>
             </div>
 
-            <div className="w-full rounded-md overflow-hidden mb-4">
+            <div className="w-full rounded-md overflow-hidden mb-8">
                 {url && (
                     <Image
                         src={url}
                         alt={title}
                         width={width}
                         height={height}
-                        className="w-full object-cover aspect-video"
+                        className="w-full object-cover aspect-video m-0"
                     />
                 )}
             </div>

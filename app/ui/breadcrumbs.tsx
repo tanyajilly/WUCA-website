@@ -22,24 +22,24 @@ export default function Breadcrumbs() {
     const sectionsList = ["news", "events", "facts"];
 
     return (
-        <nav aria-label="breadcrumb" className="mb-5">
-            <ol>
-                <li className="inline-block">
-                    <Link href="/">{t('home')}</Link>
+        <nav aria-label="breadcrumb" className="mb-12">
+            <ol className="flex flex-wrap justify-center">
+                <li>
+                    <Link className="text-slate-700 hover:text-blue-700" href="/">{t('home')}</Link>
                 </li>
                 {breadcrumbs.map(
                     ({ href, label, isLast }, index) =>
                         (index === 0 || !sectionsList.includes(section)) && (
                             <li
                                 key={index}
-                                className="inline-block capitalize before:content-['/'] before:mx-1"
+                                className="inline-flex items-center capitalize before:h-4 before:w-px before:bg-slate-300 before:mx-3 before:content-['']"
                             >
                                 {!isLast ? (
-                                    <Link href={href} prefetch={false}>
+                                    <Link className="text-slate-700 hover:text-blue-700" href={href} prefetch={false}>
                                         {label}
                                     </Link>
                                 ) : (
-                                    <span aria-current="page">{label}</span>
+                                    <span className="text-gray-500" aria-current="page">{label}</span>
                                 )}
                             </li>
                         )

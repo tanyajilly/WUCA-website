@@ -50,7 +50,7 @@ export default function Events({
     }
     return (
         <>
-            <section className="flex flex-col gap-10">
+            <section className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {data &&
                     data.data.map((event: Event) => (
                         <EventPreview key={event.id} event={event} />
