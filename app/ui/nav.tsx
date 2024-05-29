@@ -56,8 +56,8 @@ export default function Nav({ items }: { items: NavigationItem[] }) {
                                     href={path}
                                     target={external ? "_blank" : ""}
                                     className={clsx(
-                                        "text-slate-700 hover:text-blue-500",
-                                        { "text-blue-700": isActive }
+                                        "text-slate-700 hover:text-blue-500 hover:no-underline",
+                                        { "!text-blue-700": isActive }
                                     )}
                                 >
                                     {title}

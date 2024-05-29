@@ -21,10 +21,10 @@ export async function getArticles(
         params.append("sort", "publishedAt:desc");
         params.append("locale", locale);
         // upcoming events, exclude repeatable
-        if (articleType === 'events') {
-            const today = new Date().toISOString().split('T')[0];
+        if (articleType === "events") {
+            const today = new Date().toISOString().split("T")[0];
             params.append("filters[$and][0][startDate][$gte]", today);
-            params.append("filters[$and][1][isRepeatable][$eq]", 'false');
+            params.append("filters[$and][1][isRepeatable][$eq]", "false");
         }
         const queryString = params.toString();
         const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/${articleType}?${queryString}`;
@@ -35,7 +35,11 @@ export async function getArticles(
     }
 }
 
-export async function getArticleBySlug(slug: string, articleType: string, locale: string) {
+export async function getArticleBySlug(
+    slug: string,
+    articleType: string,
+    locale: string
+) {
     try {
         const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/${articleType}/${slug}?locale=${locale}`;
         const articleResponse = await fetcher(url, { cache: "no-store" });
@@ -56,7 +60,7 @@ export async function getPageBySlug(slug: string, locale?: string) {
 }
 
 export async function getHomepageContent(locale: string) {
-    const pageName = locale === 'uk' ? 'homepage-ua' : 'homepage';
+    // const pageName = locale === 'uk' ? 'homepage-ua' : 'homepage';
     try {
         const params = new URLSearchParams();
         params.append("populate[0]", "carousel.photo.image");
@@ -64,8 +68,9 @@ export async function getHomepageContent(locale: string) {
         params.append("populate[2]", "fact.image");
         params.append("populate[3]", "warInfo.image");
         params.append("populate[4]", "about.Button");
+        params.append("locale", locale);
         const queryString = params.toString();
-        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/${pageName}?${queryString}`;
+        const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/homepage?${queryString}`;
         const pageResponse = await fetcher(url, { cache: "no-store" });
         return pageResponse;
     } catch (error) {

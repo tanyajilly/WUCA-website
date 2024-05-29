@@ -31,8 +31,8 @@ export default function PostPreview({
                 </Link>
             </div>
             <div className="p-2">
-                <h2 className="text-2xl leading-5 font-semibold mb-2">
-                    <Link className="text-current" href={`/${enhancedArticleType}/${slug}`}>
+                <h2 className="text-2xl leading-6 font-semibold mb-2">
+                    <Link className="text-current hover:no-underline" href={`/${enhancedArticleType}/${slug}`}>
                         {title}
                     </Link>
                 </h2>
