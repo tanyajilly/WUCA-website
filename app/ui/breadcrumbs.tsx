@@ -20,6 +20,8 @@ export default function Breadcrumbs() {
     // don't show article name as a breadcrumb
     const section = breadcrumbSegments[0];
     const sectionsList = ["news", "events", "facts"];
+    if (section === "category") return;
+
 
     return (
         <nav aria-label="breadcrumb" className="mb-6 md:mb-12">

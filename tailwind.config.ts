@@ -58,6 +58,9 @@ const config: Config = {
                             textDecoration: "none",
                             fontWeight: "normal",
                         },
+                        li: {
+                            fontFamily: "var(--font-serif), serif",
+                        },
                     },
                 },
             },

@@ -44,11 +44,11 @@ export default async function Post({ article, locale }: PostProps) {
                     <ul className="flex flex-wrap space-x-4">
                         {categories.data.map((cat) => (
                             <li key={cat.id}>
-                                {/* <Link
-                                    href={`/news/category/${cat.attributes.slug}`}
-                                > */}
-                                {cat.attributes.name}
-                                {/* </Link> */}
+                                <Link
+                                    href={`/category/${cat.attributes.slug}`}
+                                >
+                                    {cat.attributes.name}
+                                </Link>
                             </li>
                         ))}
                     </ul>

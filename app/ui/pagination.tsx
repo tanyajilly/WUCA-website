@@ -8,11 +8,11 @@ type PaginationProps = {
     setPageIndex: (index: number) => void;
 }
 
-export default function Pagination({ 
-        pageIndex,
-        pageCount,
-        setPageIndex
-    }: PaginationProps) {
+export default function Pagination({
+    pageIndex,
+    pageCount,
+    setPageIndex
+}: PaginationProps) {
 
     const { t } = useTranslation();
     const handlePreviousClick = useCallback(() => {
@@ -26,7 +26,7 @@ export default function Pagination({
     if (pageCount === 1) return null;
 
     return (
-        <div className="space-x-2 space-y-2">
+        <div className="space-x-2 mt-6">
             <button className={clsx(
                 'p-2 rounded text-white bg-blue-400',
                 pageIndex === 1 && 'bg-gray-300'

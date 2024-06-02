@@ -16,6 +16,7 @@ export interface Article {
         slug: string;
         categories?: Categories;
     };
+    articleType?: "articles" | "facts";
 }
 
 export interface Author {
@@ -131,7 +132,14 @@ export interface SinglePageResponse {
     error?: Error;
 }
 
-export type DayOfWeek = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
+export type DayOfWeek =
+    | "Monday"
+    | "Tuesday"
+    | "Wednesday"
+    | "Thursday"
+    | "Friday"
+    | "Saturday"
+    | "Sunday";
 
 export const dayOfWeekMap: { [key in DayOfWeek]: number } = {
     Monday: 1,
@@ -159,7 +167,7 @@ export interface Event {
         endTime?: string;
         location: string;
         isRepeatable: boolean;
-        repeatFrequency?: 'weekly' | 'biweekly';
+        repeatFrequency?: "weekly" | "biweekly";
         dayOfWeek?: DayOfWeek;
     };
 }
